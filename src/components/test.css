@@ -1,0 +1,11 @@
+/* test.css */
+div {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+}
+div.hi {
+    color: #2ecc71;
+    text-align: center;
+}
+
