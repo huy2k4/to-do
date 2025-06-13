@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../assets/css/todolist.css';
-import TaskItem from './TaskItem';
+import TaskItem from './TaskBoard/TaskItem';
 
 export default function ToDoList() {
 

@@ -1,18 +1,84 @@
+/* Reset basic */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* #root {
-
-} */
+/* App.css */
 
 body {
   font-family: Arial, sans-serif;
   background-color: #f7f7f7;
   color: #333;
-  padding: 20px;
+}
+
+/* App container */
+.app-container {
   display: flex;
-  justify-content:center ;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header and footer */
+header,
+footer {
+  flex-shrink: 0;
+  background-color: #333;
+  color: white;
+  padding: 12px;
+  text-align: center;
+}
+
+/* Main content: 3 columns */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+}
+
+.left-panel {
+  max-width: fit-content;
+  border-radius: 50px;
+  background-color: #ddd;
+}
+
+.side-panel {
+  width: 34%;
+  padding: 8px;
+  box-sizing: border-box;
+
+
+}
+
+.center-panel {
+  flex: 1;
+  padding: 8px;
+  box-sizing: border-box;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+
+/* No task message */
+.no-task {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  margin-top: 20px;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+  }
+
+  .side-panel,
+  .center-panel {
+    width: 100%;
+    border: none;
+  }
 }

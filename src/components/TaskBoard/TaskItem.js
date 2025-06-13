@@ -1,27 +1,13 @@
 import React, { useState } from 'react';
-import '../assets/css/taskitem.css';
+import '../../assets/css/taskitem.css';
 
-export default function TaskItem({ task, setFullTask }) {
+export default function TaskItem({ task, handleDelete, handleToggleDone, handleEdit  }) {
     const [isEditing, setIsEditing] = useState(false);
     const [editValue, setEditValue] = useState(task.content);
-    const handleEditSubmit = () => {
-        setFullTask(prevTasks =>
-            prevTasks.map(t =>
-                t.id === task.id ? { ...t, content: editValue } : t
-            )
-        );
-        setIsEditing(false);
-    };
-    const handleDelTask = () => {
-        setFullTask(prevTasks => prevTasks.filter(t => t.id !== task.id));
-    };
 
-    const handleDoneTask = () => {
-        setFullTask(prevTasks =>
-            prevTasks.map(t =>
-                t.id === task.id ? { ...t, isDone: !t.isDone } : t
-            )
-        );
+    const handleEditSubmit = () => {
+        handleEdit(task.id, editValue);
+        setIsEditing(false);
     };
 
     return (
@@ -43,14 +29,14 @@ export default function TaskItem({ task, setFullTask }) {
                             autoFocus
                         />
                     ) : (
-                    <span className={`task-content ${task.isDone ? 'completed' : ''}`}
-                            >
-                        {task.content}
-                    </span>)}
+                        <span className={`task-content ${task.isDone ? 'completed' : ''}`}>
+                            {task.content}
+                        </span>
+                    )}
                 </div>
             </div>
-            <button onClick={handleDelTask} className="tdl-del-btn">XOA</button>
-            <button onClick={handleDoneTask} className='tdl-done-btn'>
+            <button onClick={() => handleDelete(task.id)} className="tdl-del-btn">XÓA</button>
+            <button onClick={() => handleToggleDone(task.id)} className='tdl-done-btn'>
                 {task.isDone ? 'Hoàn tác' : 'Xong'}
             </button>
         </div>
