@@ -81,11 +81,11 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 }
 
 .task-item {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    /* gap: 10px; */
 }

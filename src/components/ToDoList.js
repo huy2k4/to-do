@@ -3,14 +3,20 @@ import '../assets/css/todolist.css';
 import TaskItem from './TaskItem';
 
 export default function ToDoList() {
+
   const [task, setTask] = useState('');
   const [fullTask, setFullTask] = useState([]);
 
   const handleAddTask = () => {
     if (task.trim() === '') return;
-    const newFullTask = [task.trim(), ...fullTask];
-    setFullTask(newFullTask);
-    console.log(newFullTask);
+
+    const newTask = {
+      id: Date.now(),
+      content: task.trim(),
+      isDone: false,
+    };
+
+    setFullTask([newTask, ...fullTask]);
     setTask('');
   };
 
@@ -43,13 +49,13 @@ export default function ToDoList() {
       </div>
       <div className="task-list">
         <div className="task-item">
-          {fullTask.map((item, index) => (
-            <TaskItem 
-            index={index}
-            key={index} 
-            content={item}
-            setFullTask={setFullTask} 
-            />))}
+          {fullTask.map((item) => (
+            <TaskItem
+              key={item.id}
+              task={item}
+              setFullTask={setFullTask}
+            />
+          ))}
         </div>
       </div>
     </div>
