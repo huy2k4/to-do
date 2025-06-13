@@ -1,11 +1,11 @@
-import './App.css';
-import './components/test'
-import Hello from './components/test';
-
+import React from 'react';
+import ToDoList from './components/ToDoList';
 function App() {
-  return <div>
-    <Hello/>
+  return (
+    <div className="app">
+      <ToDoList/>
     </div>
+  );
 }
 
 export default App;
