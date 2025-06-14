@@ -8,6 +8,7 @@
 /* App.css */
 
 body {
+  width: 100vw;
   font-family: Arial, sans-serif;
   background-color: #f7f7f7;
   color: #333;
@@ -21,14 +22,14 @@ body {
 }
 
 /* Header and footer */
-header,
+/* header,
 footer {
   flex-shrink: 0;
   background-color: #333;
   color: white;
   padding: 12px;
   text-align: center;
-}
+} */
 
 /* Main content: 3 columns */
 .main-content {
@@ -41,25 +42,34 @@ footer {
 }
 
 .left-panel {
+  width: 26vw;
+  padding: 8px;
+  box-sizing: border-box;
   max-width: fit-content;
   border-radius: 50px;
   background-color: #ddd;
 }
 
-.side-panel {
-  width: 34%;
+.right-panel {
+  /* width: 37vw;
   padding: 8px;
   box-sizing: border-box;
-
-
-}
-
-.center-panel {
+  max-width: fit-content;
+  border-radius: 50px;
+  background-color: #ddd; */
+  width: 37vw;
   flex: 1;
   padding: 8px;
   box-sizing: border-box;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
+}
+
+.center-panel {
+  width: 37vw;
+  flex: 1;
+  padding: 8px;
+  box-sizing: border-box;
+  /* border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd; */
 }
 
 /* No task message */
