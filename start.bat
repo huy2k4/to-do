@@ -1,0 +1,4 @@
+@echo off
+echo 🚀 Starting Docker Compose...
+start "" "http://localhost:3000"
+docker-compose up --build

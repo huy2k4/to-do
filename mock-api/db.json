@@ -1,0 +1,58 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "content": "Học Redux",
+      "priority": "high",
+      "deadline": "2025-06-18",
+      "tags": "học, công nghệ",
+      "notes": "bắt đầu với json-server",
+      "isDone": false
+    },
+    {
+      "id": 2,
+      "content": "Nộp báo cáo thuế quý 2",
+      "priority": "high",
+      "deadline": "2025-06-30",
+      "tags": "công việc, tài chính",
+      "notes": "Kiểm tra lại các khoản chi phí",
+      "isDone": false
+    },
+    {
+      "id": 3,
+      "content": "Đi khám răng định kỳ",
+      "priority": "medium",
+      "deadline": "2025-07-05",
+      "tags": "sức khỏe, cá nhân",
+      "notes": "Đặt lịch trước với nha sĩ",
+      "isDone": false
+    },
+    {
+      "id": 4,
+      "content": "Mua quà sinh nhật vợ",
+      "priority": "high",
+      "deadline": "2025-06-20",
+      "tags": "gia đình, mua sắm",
+      "notes": "Cô ấy thích túi xách da",
+      "isDone": false
+    },
+    {
+      "id": 5,
+      "content": "Sửa vòi nước bị rò rỉ",
+      "priority": "low",
+      "deadline": "2025-07-10",
+      "tags": "nhà cửa, sửa chữa",
+      "notes": "Mua thêm băng keo non",
+      "isDone": false
+    },
+    {
+      "id": 6,
+      "content": "Chuẩn bị slide thuyết trình",
+      "priority": "medium",
+      "deadline": "2025-06-25",
+      "tags": "công việc, học",
+      "notes": "Tổng hợp dữ liệu từ phòng R&D",
+      "isDone": false
+    }
+  ]
+}
