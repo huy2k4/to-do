@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:18-alpine
 
 WORKDIR /app
 
@@ -7,8 +7,6 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
+EXPOSE 3000
 
-# Dùng serve để chạy React build
-RUN npm install -g serve
-CMD ["serve", "-s", "build", "-l", "3000"]
+CMD ["npm", "start"]

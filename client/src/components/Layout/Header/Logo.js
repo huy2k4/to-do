@@ -1,11 +1,11 @@
 import React from 'react'
-import tuoitreLogo from '../../../assets/images/tuoitreLogo.webp';
+import AppLogo from '../../../assets/images/DragonTDL.png';
 
 export default function Logo() {
     return (
         <div className="app-title">
             <a href="/">
-                <img src={tuoitreLogo} alt="Tuổi Trẻ Logo" className="logo" />
+                <img src={AppLogo} alt="Logo" className="logo" />
             </a>
             {/* <span className="title-text">TEAMWORK</span> */}
         </div>

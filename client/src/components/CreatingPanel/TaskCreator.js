@@ -1,19 +1,28 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../../assets/css/taskcreator.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addTask } from '../../redux/features/tasks/taskSlice';
+import { addTag } from '../../redux/features/tags/tagSlice';
 
 export default function TaskCreator() {
   const dispatch = useDispatch();
+  const tags = useSelector(state => state.tags.items || []);
+
+  const tagColors = [
+    '#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5',
+    '#2196f3', '#009688', '#4caf50', '#ff9800', '#795548'
+  ];
+
   const [content, setContent] = useState('');
   const today = new Date().toISOString().split('T')[0];
   const [deadline, setDeadline] = useState(today);
   const [priority, setPriority] = useState('medium');
-  const [tags, setTags] = useState('');
+  const [tagInput, setTagInput] = useState('');
+  const [selectedColor, setSelectedColor] = useState(tagColors[0]);
   const [notes, setNotes] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
-  const containerRef = useRef(null);
 
+  const containerRef = useRef(null);
   const deadlineRef = useRef();
   const priorityRef = useRef();
   const tagsRef = useRef();
@@ -29,26 +38,48 @@ export default function TaskCreator() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const getOrCreateTag = (name, color) => {
+    const normalizedName = name.trim().toLowerCase();
+    const existing = tags.find(tag => tag.name.toLowerCase() === normalizedName);
+
+    if (existing) return existing;
+
+    const newTag = {
+      id: `tag-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+      name: name.trim(),
+      color: color || tagColors[0]
+    };
+
+    dispatch(addTag(newTag));
+    return newTag;
+  };
+
   const handleAddTask = () => {
     if (content.trim() === '') return;
+
+    const tagNames = tagInput
+      .split(',')
+      .map(t => t.trim())
+      .filter(Boolean);
+
+    const finalTags = tagNames.map(name => getOrCreateTag(name, selectedColor));
 
     const newTask = {
       content: content.trim(),
       deadline: deadline || today,
       priority,
-      tags,
+      tags: finalTags,
       notes,
       isDone: false,
     };
-
     dispatch(addTask(newTask));
 
-    // Reset form
     setContent('');
     setDeadline('');
     setPriority('medium');
-    setTags('');
+    setTagInput('');
     setNotes('');
+    setSelectedColor(tagColors[0]);
     setIsExpanded(false);
   };
 
@@ -77,7 +108,7 @@ export default function TaskCreator() {
 
         <div className={`task-fields-wrapper ${isExpanded ? 'show' : ''}`}>
           <div className="task-field">
-            <label htmlFor="deadline">Hạn chót</label>
+            <span className="field-icon">📅</span>
             <input
               type="date"
               id="deadline"
@@ -96,7 +127,7 @@ export default function TaskCreator() {
           </div>
 
           <div className="task-field">
-            <label htmlFor="priority">Mức độ ưu tiên</label>
+            <span className="field-icon">🔥</span>
             <select
               id="priority"
               ref={priorityRef}
@@ -117,26 +148,49 @@ export default function TaskCreator() {
           </div>
 
           <div className="task-field">
-            <label htmlFor="tags">Thẻ</label>
-            <input
-              type="text"
-              id="tags"
-              ref={tagsRef}
-              className="task-crt-tags field-tags"
-              placeholder="Giải trí, học tập,..."
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  notesRef.current?.focus();
-                }
-              }}
-            />
+            <span className="field-icon">🏷️</span>
+            <div className="tag-input-group">
+              <input
+                type="text"
+                id="tags"
+                ref={tagsRef}
+                className="task-crt-tags field-tags"
+                placeholder="Giải trí, học tập,..."
+                value={tagInput}
+                onChange={(e) => setTagInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    notesRef.current?.focus();
+                  }
+                }}
+              />
+              <select
+                id="color"
+                className="task-tag-color-select"
+                value={selectedColor}
+                onChange={(e) => setSelectedColor(e.target.value)}
+                style={{
+                  backgroundColor: selectedColor
+                }}
+              >
+                {tagColors.map((color) => (
+                  <option
+                    key={color}
+                    value={color}
+                    style={{
+                      backgroundColor: color,
+                      color: 'transparent',
+                      fontSize: '0px'
+                    }}
+                  />
+                ))}
+              </select>
+            </div>
           </div>
 
           <div className="task-field">
-            <label htmlFor="notes">Ghi chú</label>
+            <span className="field-icon">📝</span>
             <textarea
               id="notes"
               ref={notesRef}
@@ -153,13 +207,15 @@ export default function TaskCreator() {
             />
           </div>
         </div>
+        <div className="task-field">
+          <button
+            className={`task-crt-add-btn ${content.trim() !== '' ? 'visible' : ''}`}
+            onClick={handleAddTask}
+          >
+            Thêm
+          </button>
+        </div>
 
-        <button
-          className={`task-crt-add-btn ${content.trim() !== '' ? 'visible' : ''}`}
-          onClick={handleAddTask}
-        >
-          Thêm
-        </button>
       </div>
     </div>
   );

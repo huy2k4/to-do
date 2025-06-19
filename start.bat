@@ -1,4 +1,4 @@
 @echo off
-echo 🚀 Starting Docker Compose...
+echo  Đang khởi động TodoList App...
 start "" "http://localhost:3000"
-docker-compose up --build
+json-server --watch D:\TODOLIST\mock-api\db.json --host 0.0.0.0 --port 3001

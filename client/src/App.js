@@ -1,10 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Layout/Header/Header';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Header from './components/Layout/Header/Header.js';
 import Footer from './components/Layout/Footer';
-import StatsPage from './pages/StatsPage';
-import TeamPage from './pages/TeamPage';
-import TodoPage from './pages/TodoPage';
+import AppRoutes from './routes/AppRoutes.jsx';
 import './assets/css/app.css';
 
 function App() {
@@ -12,11 +10,7 @@ function App() {
     <Router>
       <div className="app-container">
         <Header />
-        <Routes>
-          <Route path="/" element={<TodoPage />} />
-          <Route path="/stats" element={<StatsPage />} />
-          <Route path="/team" element={<TeamPage />} />
-        </Routes>
+        <AppRoutes />
         <Footer />
       </div>
     </Router>

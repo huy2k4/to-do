@@ -1,16 +1,60 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import '../../assets/css/confirmdeletemodal.css';
+import { addTag } from '../../redux/features/tags/tagSlice';
 
 export default function EditTaskModal({ initialValues, onConfirm, onCancel }) {
-  const [values, setValues] = useState(initialValues);
+  const dispatch = useDispatch();
+  const tags = useSelector(state => state.tags.items || []);
+
+  const tagColors = [
+    '#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5',
+    '#2196f3', '#009688', '#4caf50', '#ff9800', '#795548'
+  ];
+
+  // Convert tags → input string
+  const initialTagInput = (initialValues.tags || [])
+    .map(tag => tag.name)
+    .join(', ');
+
+  const [values, setValues] = useState({
+    ...initialValues,
+    tagInput: initialTagInput,
+  });
 
   const handleChange = (field, value) => {
     setValues(prev => ({ ...prev, [field]: value }));
   };
 
+  const getOrCreateTag = (name) => {
+    const normalized = name.trim();
+    const existing = tags.find(tag => tag.name.toLowerCase() === normalized.toLowerCase());
+    if (existing) return existing;
+
+    const newTag = {
+      id: `tag-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+      name: normalized,
+      color: tagColors[Math.floor(Math.random() * tagColors.length)]
+    };
+
+    dispatch(addTag(newTag));
+    return newTag;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onConfirm(values);
+
+    const tagNames = values.tagInput
+      .split(',')
+      .map(t => t.trim())
+      .filter(Boolean);
+
+    const finalTags = tagNames.map(getOrCreateTag);
+
+    onConfirm({
+      ...values,
+      tags: finalTags,
+    });
   };
 
   return (
@@ -44,11 +88,12 @@ export default function EditTaskModal({ initialValues, onConfirm, onCancel }) {
           onChange={(e) => handleChange('deadline', e.target.value)}
         />
 
-        <label>Tags</label>
+        <label>Tags (phân cách bằng dấu phẩy)</label>
         <input
           type="text"
-          value={values.tags}
-          onChange={(e) => handleChange('tags', e.target.value)}
+          value={values.tagInput}
+          onChange={(e) => handleChange('tagInput', e.target.value)}
+          placeholder="Giải trí, học tập..."
         />
 
         <label>Ghi chú</label>

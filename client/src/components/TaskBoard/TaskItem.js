@@ -8,6 +8,24 @@ export default function TaskItem({ task, handleDelete, handleToggleDone, handleE
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
+  function getDeadlineStatus(deadlineStr) {
+    const today = new Date();
+    const deadline = new Date(deadlineStr);
+    today.setHours(0, 0, 0, 0);
+    deadline.setHours(0, 0, 0, 0);
+
+    const diffTime = deadline - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays > 0) {
+      return { status: `Còn ${diffDays} ngày nữa`, color: '#4caf50' }; // Green for future
+    } else if (diffDays === 0) {
+      return { status: `Hôm nay đến hạn!`, color: '#ff9800' }; // Orange for today
+    } else {
+      return { status: `Đã trễ ${Math.abs(diffDays)} ngày`, color: '#f44336' }; // Red for overdue
+    }
+  }
+
   const handleDeleteConfirmed = () => {
     handleDelete(task.id);
     setShowDeleteModal(false);
@@ -18,23 +36,42 @@ export default function TaskItem({ task, handleDelete, handleToggleDone, handleE
     setShowEditModal(false);
   };
 
+  const taskTagObjects = Array.isArray(task.tags) ? task.tags : [];
+  const deadlineStatus = task.deadline ? getDeadlineStatus(task.deadline) : null;
+
   return (
     <div className="task-block-container">
-      <div className="task-block" onDoubleClick={() => setShowEditModal(true)}>
+      <div className={`task-block priority-${task.priority}`} onDoubleClick={() => setShowEditModal(true)}>
         <div className="item">
           <span className={`task-content ${task.isDone ? 'completed' : ''}`}>
             {typeof task.content === 'string' ? task.content : '[nội dung không hợp lệ]'}
           </span>
 
           <div className="task-meta">
-            {task.priority && (
-              <div className="task-priority"><strong>Ưu tiên:</strong> {task.priority}</div>
+            {deadlineStatus && (
+              <div className="task-deadline" style={{ color: deadlineStatus.color }}>
+                {deadlineStatus.status}
+              </div>
             )}
-            {task.deadline && (
-              <div className="task-deadline"><strong>Hạn:</strong> {task.deadline}</div>
-            )}
-            {task.tags && task.tags.trim() !== '' && (
-              <div className="task-tags"><strong>Tags:</strong> {task.tags}</div>
+            {taskTagObjects.length > 0 && (
+              <div className="task-tags">
+                {taskTagObjects.map(tag => (
+                  <span
+                    key={tag.id}
+                    style={{
+                      backgroundColor: tag.color,
+                      color: '#fff',
+                      padding: '2px 6px',
+                      borderRadius: '4px',
+                      fontSize: '12px',
+                      marginRight: '4px',
+                      display: 'inline-block'
+                    }}
+                  >
+                    {tag.name}
+                  </span>
+                ))}
+              </div>
             )}
             {task.notes && task.notes.trim() !== '' && (
               <div className="task-notes"><strong>Ghi chú:</strong> {task.notes}</div>
@@ -74,7 +111,7 @@ export default function TaskItem({ task, handleDelete, handleToggleDone, handleE
             content: task.content || '',
             priority: task.priority || '',
             deadline: task.deadline || '',
-            tags: task.tags || '',
+            tags: task.tags || [],
             notes: task.notes || ''
           }}
           onConfirm={handleEditConfirmed}

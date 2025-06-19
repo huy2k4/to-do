@@ -7,7 +7,7 @@ const taskSlice = createSlice({
     error: null,
   },
   reducers: {
-        loadSuccess: (state, action) => {
+    loadSuccess: (state, action) => {
       state.items = action.payload;
     },
     loadFail: (state, action) => {
@@ -20,6 +20,7 @@ const taskSlice = createSlice({
         content: String(content).trim(),
         ...rest,
       });
+      console.log(state.items);
     },
 
     deleteTask: (state, action) => {
@@ -32,16 +33,16 @@ const taskSlice = createSlice({
     },
 
     editTask: (state, action) => {
-  const { id, ...updates } = action.payload;
-  const task = state.items.find(t => t.id === id);
-  if (task) {
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value !== undefined) {
-        task[key] = value;
+      const { id, ...updates } = action.payload;
+      const task = state.items.find(t => t.id === id);
+      if (task) {
+        Object.entries(updates).forEach(([key, value]) => {
+          if (value !== undefined) {
+            task[key] = value;
+          }
+        });
       }
-    });
-  }
-},
+    },
   },
 });
 

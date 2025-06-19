@@ -1,8 +1,11 @@
 .task-board-container {
     padding: 10px;
-    border-radius: 50px;
+    border-radius: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    background-color: var(--bg-light);
+background: linear-gradient(120deg, #c1dfc4, #deecdd);
+
+
+    /* background-color: var(--bg-taskboard); */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -14,7 +17,7 @@
 }
 
 .task-board-label {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
     color: var(--primary);
 }
@@ -57,14 +60,16 @@
     overflow-y: auto;
     padding-right: 2px;
 }
+
 .task-board::-webkit-scrollbar {
-  width: 6px;
+    width: 6px;
 }
 
 .task-board::-webkit-scrollbar-thumb {
-  background-color: var(--primary-light);
-  border-radius: 3px;
+    background-color: var(--primary-light);
+    border-radius: 3px;
 }
+
 .no-task {
     text-align: center;
     font-size: 16px;

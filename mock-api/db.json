@@ -1,57 +1,55 @@
 {
+  "tags": [
+    { "id": "1", "name": "Giải trí", "color": "#e67e22" },
+    { "id": "2", "name": "Học tập", "color": "#3498db" },
+    { "id": "3", "name": "Công việc", "color": "#2ecc71" },
+    { "id": "4", "name": "Gia đình", "color": "#9b59b6" },
+    { "id": "5", "name": "Mua sắm", "color": "#e74c3c" }
+  ],
   "tasks": [
     {
       "id": 1,
-      "content": "Học Redux",
-      "priority": "high",
-      "deadline": "2025-06-18",
-      "tags": "học, công nghệ",
-      "notes": "bắt đầu với json-server",
+      "content": "Dọn dẹp bàn làm việc",
+      "priority": "low",
+      "deadline": "2025-06-20",
+      "tags": [
+        { "id": "1", "name": "Giải trí", "color": "#e67e22" }
+      ],
+      "notes": "",
       "isDone": false
     },
     {
       "id": 2,
-      "content": "Nộp báo cáo thuế quý 2",
+      "content": "Học React Hooks",
       "priority": "high",
-      "deadline": "2025-06-30",
-      "tags": "công việc, tài chính",
-      "notes": "Kiểm tra lại các khoản chi phí",
+      "deadline": "2025-06-22",
+      "tags": [
+        { "id": "2", "name": "Học tập", "color": "#3498db" }
+      ],
+      "notes": "Đọc thêm useMemo",
       "isDone": false
     },
     {
       "id": 3,
-      "content": "Đi khám răng định kỳ",
+      "content": "Họp nhóm dự án",
       "priority": "medium",
-      "deadline": "2025-07-05",
-      "tags": "sức khỏe, cá nhân",
-      "notes": "Đặt lịch trước với nha sĩ",
-      "isDone": false
+      "deadline": "2025-06-21",
+      "tags": [
+        { "id": "3", "name": "Công việc", "color": "#2ecc71" }
+      ],
+      "notes": "Chuẩn bị slide",
+      "isDone": true
     },
     {
       "id": 4,
-      "content": "Mua quà sinh nhật vợ",
+      "content": "Mua quà sinh nhật mẹ",
       "priority": "high",
-      "deadline": "2025-06-20",
-      "tags": "gia đình, mua sắm",
-      "notes": "Cô ấy thích túi xách da",
-      "isDone": false
-    },
-    {
-      "id": 5,
-      "content": "Sửa vòi nước bị rò rỉ",
-      "priority": "low",
-      "deadline": "2025-07-10",
-      "tags": "nhà cửa, sửa chữa",
-      "notes": "Mua thêm băng keo non",
-      "isDone": false
-    },
-    {
-      "id": 6,
-      "content": "Chuẩn bị slide thuyết trình",
-      "priority": "medium",
-      "deadline": "2025-06-25",
-      "tags": "công việc, học",
-      "notes": "Tổng hợp dữ liệu từ phòng R&D",
+      "deadline": "2025-06-23",
+      "tags": [
+        { "id": "4", "name": "Gia đình", "color": "#9b59b6" },
+        { "id": "5", "name": "Mua sắm", "color": "#e74c3c" }
+      ],
+      "notes": "Cẩn thận chọn màu sắc",
       "isDone": false
     }
   ]

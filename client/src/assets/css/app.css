@@ -6,19 +6,19 @@
 }
 
 :root {
-  /* Bảng màu nâng cấp */
   --primary: #6C5CE7;
   --primary-light: #A29BFE;
   --secondary: #00CEFF;
   --secondary-dark: #0984E3;
-  --bg-light: #F9F9F9;
+  --bg-light: #f9f9f9;
+  --bg-taskboard:#F9F7F5;
   --bg-dark: #2D3436;
   --text-light: #F9F9F9;
   --text-dark: #2D3436;
   --text-gray: #636E72;
-  --priority-high: #FF7675;
-  --priority-medium: #FDCB6E;
-  --priority-low: #A29BFE;
+  --priority-high: #FFEAEA;
+  --priority-medium: #FFF5DC;
+  --priority-low: #EDEBFF;
   --completed: #55EFC4;
   --border-light: #DFE6E9;
   --border-dark: #636E72;
@@ -52,9 +52,10 @@ body {
 
 /* Panels */
 .left-panel {
-  width: 26vw;
+  width: 20vw;
+  max-height: fit-content;
   padding: 16px;
-  border-radius: 50px;
+  border-radius: 20px;
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
@@ -62,20 +63,19 @@ body {
 .center-panel {
   flex: 1;
   padding: 16px;
-  border-radius: 50px;
+  border-radius: 20px;
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .right-panel {
-  width: 37vw;
+  width: 30vw;
   padding: 16px;
-  border-radius: 50px;
+  border-radius: 20px;
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-/* Task elements */
 .task-item {
   padding: 12px;
   margin-bottom: 8px;
@@ -117,7 +117,6 @@ body {
   font-size: 0.9em;
 }
 
-/* No task message */
 .no-task {
   text-align: center;
   color: var(--text-gray);
@@ -125,7 +124,6 @@ body {
   padding: 24px;
 }
 
-/* Responsive layout */
 @media (max-width: 768px) {
   .main-content {
     flex-direction: column;
@@ -139,8 +137,9 @@ body {
   }
 }
 
-/* Additional UI improvements */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   color: var(--primary);
   margin-bottom: 12px;
 }
