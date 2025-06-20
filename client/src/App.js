@@ -7,7 +7,7 @@ import './assets/css/app.css';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/to-do">
       <div className="app-container">
         <Header />
         <AppRoutes />
