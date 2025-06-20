@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/huy2k4/to-do.git/static/css/main.ba177831.css",
-    "main.js": "/huy2k4/to-do.git/static/js/main.b218bc31.js",
-    "static/media/tuoitreLogo.webp": "/huy2k4/to-do.git/static/media/tuoitreLogo.35a97d2771d8ab056a80.webp",
-    "index.html": "/huy2k4/to-do.git/index.html",
-    "main.ba177831.css.map": "/huy2k4/to-do.git/static/css/main.ba177831.css.map",
-    "main.b218bc31.js.map": "/huy2k4/to-do.git/static/js/main.b218bc31.js.map"
+    "main.css": "/to-do/static/css/main.ba177831.css",
+    "main.js": "/to-do/static/js/main.f69c9da0.js",
+    "static/media/tuoitreLogo.webp": "/to-do/static/media/tuoitreLogo.35a97d2771d8ab056a80.webp",
+    "index.html": "/to-do/index.html",
+    "main.ba177831.css.map": "/to-do/static/css/main.ba177831.css.map",
+    "main.f69c9da0.js.map": "/to-do/static/js/main.f69c9da0.js.map"
   },
   "entrypoints": [
     "static/css/main.ba177831.css",
-    "static/js/main.b218bc31.js"
+    "static/js/main.f69c9da0.js"
   ]
 }
