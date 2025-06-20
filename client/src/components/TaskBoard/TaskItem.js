@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../../assets/css/taskitem.css';
-import { Trash2, CheckCircle, RotateCcw } from 'lucide-react';
+import { Trash2, CheckCircle } from 'lucide-react';
 import ConfirmDeleteModal from '../Modals/ConfirmDeleteModal';
 import EditTaskModal from '../Modals/EditTaskModal';
 
@@ -17,13 +17,9 @@ export default function TaskItem({ task, handleDelete, handleToggleDone, handleE
     const diffTime = deadline - today;
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-    if (diffDays > 0) {
-      return { status: `Còn ${diffDays} ngày nữa`, color: '#4caf50' }; // Green for future
-    } else if (diffDays === 0) {
-      return { status: `Hôm nay đến hạn!`, color: '#ff9800' }; // Orange for today
-    } else {
-      return { status: `Đã trễ ${Math.abs(diffDays)} ngày`, color: '#f44336' }; // Red for overdue
-    }
+    if (diffDays > 0) return { status: `Còn ${diffDays} ngày nữa`, color: '#4caf50' };
+    if (diffDays === 0) return { status: `Hôm nay đến hạn!`, color: '#ff9800' };
+    return { status: `Đã trễ ${Math.abs(diffDays)} ngày`, color: '#f44336' };
   }
 
   const handleDeleteConfirmed = () => {
@@ -36,14 +32,17 @@ export default function TaskItem({ task, handleDelete, handleToggleDone, handleE
     setShowEditModal(false);
   };
 
-  const taskTagObjects = Array.isArray(task.tags) ? task.tags : [];
   const deadlineStatus = task.deadline ? getDeadlineStatus(task.deadline) : null;
+  const taskTags = Array.isArray(task.tags) ? task.tags : [];
 
   return (
     <div className="task-block-container">
-      <div className={`task-block priority-${task.priority}`} onDoubleClick={() => setShowEditModal(true)}>
+      <div
+        className={`task-block priority-${task.priority}`}
+        onDoubleClick={() => setShowEditModal(true)}
+      >
         <div className="item">
-          <span className={`task-content ${task.isDone ? 'completed' : ''}`}>
+          <span className="task-content">
             {typeof task.content === 'string' ? task.content : '[nội dung không hợp lệ]'}
           </span>
 
@@ -53,9 +52,10 @@ export default function TaskItem({ task, handleDelete, handleToggleDone, handleE
                 {deadlineStatus.status}
               </div>
             )}
-            {taskTagObjects.length > 0 && (
+
+            {taskTags.length > 0 && (
               <div className="task-tags">
-                {taskTagObjects.map(tag => (
+                {taskTags.map((tag) => (
                   <span
                     key={tag.id}
                     style={{
@@ -73,27 +73,30 @@ export default function TaskItem({ task, handleDelete, handleToggleDone, handleE
                 ))}
               </div>
             )}
-            {task.notes && task.notes.trim() !== '' && (
-              <div className="task-notes"><strong>Ghi chú:</strong> {task.notes}</div>
+
+            {task.notes?.trim() && (
+              <div className="task-notes">
+                <strong>Ghi chú:</strong> {task.notes}
+              </div>
             )}
           </div>
         </div>
 
         <div className="task-actions">
-          <div onClick={() => setShowDeleteModal(true)} className="tdl-del-btn" title="Xoá">
+          <div
+            onClick={() => setShowDeleteModal(true)}
+            className="tdl-del-btn"
+            title="Xoá"
+          >
             <Trash2 size={24} strokeWidth={2.2} />
           </div>
 
           <div
-            onClick={() => handleToggleDone(task.id)}
+            onClick={() => handleToggleDone(task)}
             className="tdl-done-btn"
-            title={task.isDone ? 'Hoàn tác' : 'Xong'}
+            title="Xong"
           >
-            {task.isDone ? (
-              <RotateCcw size={24} strokeWidth={2.2} />
-            ) : (
-              <CheckCircle size={24} strokeWidth={2.2} />
-            )}
+            <CheckCircle size={24} strokeWidth={2.2} />
           </div>
         </div>
       </div>

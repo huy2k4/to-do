@@ -2,6 +2,5 @@ import React from 'react'
 
 export default function TeamPage() {
   return (
-    <div>TeamPage</div>
-  )
+<h1>TÍNH NĂNG SẮP RA MẮT</h1>  )
 }

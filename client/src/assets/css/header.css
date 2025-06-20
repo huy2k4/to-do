@@ -5,6 +5,7 @@
   background-color: #f8f8f8;
   /* border-bottom: 1px solid #ccc; */
 }
+
 .app-title {
   display: flex;
   align-items: center;
@@ -13,39 +14,51 @@
 
 .logo {
   width: 90px;
-  height: 70px;
+  height: 50px;
   object-fit: contain;
 }
+
 .title-text {
   font-family: 'Roboto', sans-serif;
   font-size: 24px;
   font-weight: bold;
   color: #e60000;
 }
+
 .nav-bar {
-    padding-left: 20px;
+  padding-left: 20px;
   margin-right: 40px;
+  background-color: #f8f9fa;
+  /* border-bottom: 1px solid #e0e0e0; */
 }
 
 .nav-list {
   list-style: none;
   display: flex;
   flex-direction: row;
-  gap: 20px;
-  padding: 0;
+  gap: 24px;
+  padding: 12px 0;
   margin: 0;
 }
 
 .nav-item {
   cursor: pointer;
+  text-decoration: none;
   font-weight: 500;
+  color: #333;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-item:hover {
+  text-decoration: none;
+  /* background-color: #e0e0e0; */
 }
 
 .nav-item.active {
-  text-decoration: underline;
-  font-weight: bold;
-}
-
-.app-title {
-  margin: 0;
+  text-decoration: none;
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
 }

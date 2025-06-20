@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import TaskItem from './TaskItem';
+import CompletedTaskItem from './CompletedTaskItem';
 import '../../assets/css/completedtaskboard.css';
-
-import {
-  deleteTask,
-  toggleDone,
-  editTask
-} from '../../redux/features/tasks/taskSlice';
+import { selectCompletedTasks } from '../../redux/selectors/taskSelector';
 
 export default function CompletedTaskBoard() {
   const dispatch = useDispatch();
-  const tasks = useSelector((state) => state.tasks.items);
-  const completedTasks = tasks.filter((t) => t.isDone);
+  const completedTasks = useSelector(selectCompletedTasks);
+
+  const handleToggleDone = useCallback((task) => {
+    dispatch({
+      type: 'task/updateTask',
+      payload: { id: task.id, isDone: false },
+    });
+  }, [dispatch]);
 
   return (
     <div className="cplt-tb-container">
@@ -26,14 +27,10 @@ export default function CompletedTaskBoard() {
           <p className="no-task">Chưa có gì</p>
         ) : (
           completedTasks.map((task) => (
-            <TaskItem
+            <CompletedTaskItem
               key={task.id}
               task={task}
-              handleDelete={() => dispatch(deleteTask(task.id))}
-              handleEdit={(newContent) =>
-                dispatch(editTask({ id: task.id, newContent }))
-              }
-              handleToggleDone={() => dispatch(toggleDone(task.id))}
+              handleToggleDone={() => handleToggleDone(task)}
             />
           ))
         )}

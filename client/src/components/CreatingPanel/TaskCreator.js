@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../../assets/css/taskcreator.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTask } from '../../redux/features/tasks/taskSlice';
-import { addTag } from '../../redux/features/tags/tagSlice';
+import { addTask } from '../../redux/slices/taskSlice';
+import { addTag } from '../../redux/slices/tagSlice';
 
 export default function TaskCreator() {
   const dispatch = useDispatch();
@@ -17,10 +17,9 @@ export default function TaskCreator() {
   const today = new Date().toISOString().split('T')[0];
   const [deadline, setDeadline] = useState(today);
   const [priority, setPriority] = useState('medium');
-  const [tagInput, setTagInput] = useState('');
-  const [selectedColor, setSelectedColor] = useState(tagColors[0]);
   const [notes, setNotes] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
+  const [tagsInput, setTagsInput] = useState([{ name: '', color: tagColors[0] }]);
 
   const containerRef = useRef(null);
   const deadlineRef = useRef();
@@ -38,10 +37,25 @@ export default function TaskCreator() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const handleTagChange = (index, field, value) => {
+    setTagsInput(prev => {
+      const updated = [...prev];
+      updated[index][field] = value;
+      return updated;
+    });
+  };
+
+  const handleAddTagField = () => {
+    setTagsInput(prev => [...prev, { name: '', color: tagColors[0] }]);
+  };
+
+  const handleRemoveTagField = (index) => {
+    setTagsInput(prev => prev.filter((_, i) => i !== index));
+  };
+
   const getOrCreateTag = (name, color) => {
     const normalizedName = name.trim().toLowerCase();
     const existing = tags.find(tag => tag.name.toLowerCase() === normalizedName);
-
     if (existing) return existing;
 
     const newTag = {
@@ -57,12 +71,9 @@ export default function TaskCreator() {
   const handleAddTask = () => {
     if (content.trim() === '') return;
 
-    const tagNames = tagInput
-      .split(',')
-      .map(t => t.trim())
-      .filter(Boolean);
-
-    const finalTags = tagNames.map(name => getOrCreateTag(name, selectedColor));
+    const finalTags = tagsInput
+      .filter(tag => tag.name.trim() !== '')
+      .map(tag => getOrCreateTag(tag.name.trim(), tag.color));
 
     const newTask = {
       content: content.trim(),
@@ -72,14 +83,14 @@ export default function TaskCreator() {
       notes,
       isDone: false,
     };
-    dispatch(addTask(newTask));
+
+    dispatch({ type: 'task/createTask', payload: newTask });
 
     setContent('');
     setDeadline('');
     setPriority('medium');
-    setTagInput('');
+    setTagsInput([{ name: '', color: tagColors[0] }]);
     setNotes('');
-    setSelectedColor(tagColors[0]);
     setIsExpanded(false);
   };
 
@@ -150,42 +161,42 @@ export default function TaskCreator() {
           <div className="task-field">
             <span className="field-icon">🏷️</span>
             <div className="tag-input-group">
-              <input
-                type="text"
-                id="tags"
-                ref={tagsRef}
-                className="task-crt-tags field-tags"
-                placeholder="Giải trí, học tập,..."
-                value={tagInput}
-                onChange={(e) => setTagInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    notesRef.current?.focus();
-                  }
+              {tagsInput.map((tag, index) => (
+                <div key={index} className="single-tag-input">
+                  <input
+                    type="text"
+                    placeholder="Tên thẻ"
+                    value={tag.name}
+                    onChange={(e) => handleTagChange(index, 'name', e.target.value)}
+                    ref={index === 0 ? tagsRef : null}
+                  />
+                  <select
+                  style={{
+                  backgroundColor: tag.color
                 }}
-              />
-              <select
-                id="color"
-                className="task-tag-color-select"
-                value={selectedColor}
-                onChange={(e) => setSelectedColor(e.target.value)}
-                style={{
-                  backgroundColor: selectedColor
-                }}
-              >
-                {tagColors.map((color) => (
-                  <option
-                    key={color}
-                    value={color}
-                    style={{
+                    value={tag.color}
+                    onChange={(e) => handleTagChange(index, 'color', e.target.value)}
+                  >
+                    {tagColors.map((color) => (
+                      
+                      <option style={{
                       backgroundColor: color,
                       color: 'transparent',
                       fontSize: '0px'
-                    }}
-                  />
-                ))}
-              </select>
+                    }} key={color} value={color}
+                      ></option>
+                    ))}
+                  </select>
+                  {tagsInput.length > 1 && (
+                    <button type="button" onClick={() => handleRemoveTagField(index)}>
+                      X
+                    </button>
+                  )}
+                </div>
+              ))}
+              <button type="button" onClick={handleAddTagField}>
+                Thêm thẻ
+              </button>
             </div>
           </div>
 
@@ -207,6 +218,7 @@ export default function TaskCreator() {
             />
           </div>
         </div>
+
         <div className="task-field">
           <button
             className={`task-crt-add-btn ${content.trim() !== '' ? 'visible' : ''}`}
@@ -215,7 +227,6 @@ export default function TaskCreator() {
             Thêm
           </button>
         </div>
-
       </div>
     </div>
   );

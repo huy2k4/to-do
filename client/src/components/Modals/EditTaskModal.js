@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import '../../assets/css/confirmdeletemodal.css';
-import { addTag } from '../../redux/features/tags/tagSlice';
+import { addTag } from '../../redux/slices/tagSlice';
 
 export default function EditTaskModal({ initialValues, onConfirm, onCancel }) {
   const dispatch = useDispatch();
@@ -12,13 +12,15 @@ export default function EditTaskModal({ initialValues, onConfirm, onCancel }) {
     '#2196f3', '#009688', '#4caf50', '#ff9800', '#795548'
   ];
 
-  // Convert tags → input string
   const initialTagInput = (initialValues.tags || [])
     .map(tag => tag.name)
     .join(', ');
 
   const [values, setValues] = useState({
-    ...initialValues,
+    content: initialValues.content || '',
+    priority: initialValues.priority || '',
+    deadline: initialValues.deadline || '',
+    notes: initialValues.notes || '',
     tagInput: initialTagInput,
   });
 
@@ -34,7 +36,7 @@ export default function EditTaskModal({ initialValues, onConfirm, onCancel }) {
     const newTag = {
       id: `tag-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
       name: normalized,
-      color: tagColors[Math.floor(Math.random() * tagColors.length)]
+      color: tagColors[Math.floor(Math.random() * tagColors.length)],
     };
 
     dispatch(addTag(newTag));
@@ -74,6 +76,7 @@ export default function EditTaskModal({ initialValues, onConfirm, onCancel }) {
         <select
           value={values.priority}
           onChange={(e) => handleChange('priority', e.target.value)}
+          required
         >
           <option value="">Chọn mức độ</option>
           <option value="high">Cao</option>

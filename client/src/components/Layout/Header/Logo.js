@@ -1,5 +1,5 @@
 import React from 'react'
-import AppLogo from '../../../assets/images/DragonTDL.png';
+import AppLogo from '../../../assets/images/tuoitreLogo.webp';
 
 export default function Logo() {
     return (

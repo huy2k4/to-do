@@ -15,13 +15,10 @@
     border: 1px solid var(--border-light);
     border-radius: 20px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-    /* background-color: var(--bg-light); */
     background-color: var(--text-light);
     width: 100%;
-    /* transition: background-color 0.3s ease; */
     transition: background-color 0.2s ease;
 }
-
 
 .task-block:hover .task-content {
     color: var(--secondary-dark);
@@ -37,17 +34,19 @@
     flex: 1;
     min-width: 200px;
 }
+
 .priority-high {
-  background-color: var(--priority-high);
+    background-color: var(--priority-high);
 }
 
 .priority-medium {
-  background-color: var(--priority-medium);
+    background-color: var(--priority-medium);
 }
 
 .priority-low {
-  background-color: var(--priority-low);
+    background-color: var(--priority-low);
 }
+
 .task-actions {
     opacity: 0;
     transform: scale(0.95);
@@ -59,7 +58,6 @@
 
 .task-edit-input {
     width: 100%;
-    padding: 0;
     font-size: 16px;
     border: none;
     border-bottom: 1px dashed var(--border-dark);
@@ -74,8 +72,6 @@
 }
 
 .task-content {
-    position: relative;
-    padding-left: 0px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 16px;
     color: var(--text-dark);
@@ -97,38 +93,30 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
-    width: 60px;
-    height: 60px;
-    font-size: 15px;
-    font-weight: bold;
-    color: var(--text-light);
-    border: 2px solid var(--border-light);
-    border-radius: 60px;
+    padding: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    background: none;
+    border: none;
+    transition: transform 0.2s ease;
 }
 
-.tdl-del-btn {
-    background-color: var(--priority-high);
+.tdl-del-btn svg {
+    stroke: #e74c3c;
 }
 
-.tdl-del-btn:hover {
-    background-color: #e74c3c;
+.tdl-done-btn svg {
+    stroke: #2ecc71;
 }
 
-.tdl-done-btn {
-    background-color: var(--completed);
-}
-
+.tdl-del-btn:hover,
 .tdl-done-btn:hover {
-    background-color: #2ecc71;
+    transform: scale(1.1);
 }
 
 .tdl-del-btn svg,
 .tdl-done-btn svg {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     stroke-width: 2.2;
 }
 
@@ -140,12 +128,10 @@
     font-size: 12px;
     line-height: 1.4;
     margin-top: 6px;
-    padding-left: 0px;
     color: var(--text-gray);
 }
 
 .task-meta div {
-    font-weight: 400;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -161,7 +147,7 @@
 }
 
 .task-tags {
-    color:antiquewhite;
+    color: antiquewhite;
     font-style: italic;
 }
 

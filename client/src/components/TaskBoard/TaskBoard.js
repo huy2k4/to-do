@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { makeFilteredTasksSelector } from '../../redux/selectors/taskSelector';
 import TaskItem from './TaskItem';
 import '../../assets/css/taskboard.css';
-import {
-  deleteTask,
-  toggleDone,
-  editTask
-} from '../../redux/features/tasks/taskSlice';
 
 export default function TaskBoard() {
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.tasks.items || []);
-  const tags = useSelector((state) => state.tags.items || []);
+  const tags = Array.from(
+  new Map(
+    tasks
+      .flatMap(task => task.tags || [])
+      .map(tag => [tag.name.toLowerCase(), tag]) // tránh trùng theo name
+  ).values()
+);
 
   const [sortBy, setSortBy] = useState('none');
   const [searchTerm, setSearchTerm] = useState('');
@@ -21,36 +23,32 @@ export default function TaskBoard() {
 
   const priorityOrder = { high: 3, medium: 2, low: 1 };
 
-  const availableTags = tags;
+  const handleDelete = useCallback(
+    (id) => dispatch({ type: 'task/removeTask', payload: id }),
+    [dispatch]
+  );
 
-  const filteredTasks = tasks
-    .filter(task => task && typeof task === 'object')
-    .filter(task => !task.isDone)
-    .filter(task =>
-      typeof task.content === 'string' &&
-      task.content.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-    .filter(task =>
-      filterTagId === '' || (Array.isArray(task.tagIds) && task.tagIds.includes(filterTagId))
-    )
-    
-    .filter(task => {
-      const taskDate = new Date(task.deadline);
-      const from = fromDate ? new Date(fromDate) : null;
-      const to = toDate ? new Date(toDate) : null;
-      if (from && taskDate < from) return false;
-      if (to && taskDate > to) return false;
-      return true;
-    })
-    .sort((a, b) => {
-      if (sortBy === 'priority') {
-        return priorityOrder[b.priority] - priorityOrder[a.priority];
-      }
-      if (sortBy === 'deadline') {
-        return new Date(a.deadline) - new Date(b.deadline);
-      }
-      return 0;
-    });
+  const handleToggleDone = useCallback(
+    (task) =>
+      dispatch({
+        type: 'task/updateTask',
+        payload: { id: task.id, isDone: !task.isDone },
+      }),
+    [dispatch]
+  );
+
+  const handleEdit = useCallback(
+    (id, values) =>
+      dispatch({
+        type: 'task/updateTask',
+        payload: { id, ...values },
+      }),
+    [dispatch]
+  );
+
+  const filteredTasks = useSelector(
+  makeFilteredTasksSelector({ searchTerm, sortBy, filterTagId, fromDate, toDate })
+);
 
   useEffect(() => {
     dispatch({ type: 'task/fetchTasks' });
@@ -88,7 +86,7 @@ export default function TaskBoard() {
             onChange={(e) => setFilterTagId(e.target.value)}
           >
             <option value="">Tất cả thẻ</option>
-            {availableTags.map(tag => (
+            {tags.map((tag) => (
               <option key={tag.id} value={tag.id}>
                 {tag.name}
               </option>
@@ -118,9 +116,9 @@ export default function TaskBoard() {
             <TaskItem
               key={task.id}
               task={task}
-              handleDelete={() => dispatch(deleteTask(task.id))}
-              handleEdit={(id, updatedValues) => dispatch(editTask({ id, ...updatedValues }))}
-              handleToggleDone={() => dispatch(toggleDone(task.id))}
+              handleDelete={() => handleDelete(task.id)}
+              handleEdit={handleEdit}
+              handleToggleDone={() => handleToggleDone(task)}
             />
           ))
         )}

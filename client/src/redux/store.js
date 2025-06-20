@@ -1,9 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import taskReducer from './features/tasks/taskSlice';
-import tagReducer from './features/tags/tagSlice';
+import taskReducer from './slices/taskSlice';
+import tagReducer from './slices/tagSlice';
 import createSagaMiddleware from 'redux-saga';
-import taskSaga from './features/tasks/taskSaga';
-import tagSaga from './features/tags/tagSaga';
+import taskSaga from './middleware/taskSaga';
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
   reducer: {
@@ -15,5 +14,4 @@ const store = configureStore({
 });
 
 sagaMiddleware.run(taskSaga);
-sagaMiddleware.run(tagSaga);
 export default store;

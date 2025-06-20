@@ -35,12 +35,12 @@
 }
 
 .modal-btn.confirm {
-  background-color: var(--primary);
+  background-color:rgb(223, 55, 83);
   color: white;
 }
 
 .modal-btn.cancel {
-  background-color: var(--priority-high);
+  background-color:rgb(113, 206, 235);
   color: white;
 }
 .modal-content label {

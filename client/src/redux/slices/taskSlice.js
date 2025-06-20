@@ -1,3 +1,4 @@
+// src/redux/features/tasks/taskSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const taskSlice = createSlice({
@@ -9,35 +10,23 @@ const taskSlice = createSlice({
   reducers: {
     loadSuccess: (state, action) => {
       state.items = action.payload;
+      state.error = null;
     },
     loadFail: (state, action) => {
-      state.error = action.error;
+      state.error = action.payload;
     },
     addTask: (state, action) => {
-      const { content, ...rest } = action.payload;
-      state.items.unshift({
-        id: Date.now(),
-        content: String(content).trim(),
-        ...rest,
-      });
-      console.log(state.items);
+      state.items.unshift(action.payload);
     },
-
     deleteTask: (state, action) => {
       state.items = state.items.filter(t => t.id !== action.payload);
     },
-
-    toggleDone: (state, action) => {
-      const task = state.items.find(t => t.id === action.payload);
-      if (task) task.isDone = !task.isDone;
-    },
-
     editTask: (state, action) => {
       const { id, ...updates } = action.payload;
       const task = state.items.find(t => t.id === id);
       if (task) {
         Object.entries(updates).forEach(([key, value]) => {
-          if (value !== undefined) {
+          if (value !== undefined && value !== null) {
             task[key] = value;
           }
         });
@@ -46,5 +35,5 @@ const taskSlice = createSlice({
   },
 });
 
-export const { addTask, deleteTask, toggleDone, editTask } = taskSlice.actions;
+export const { loadSuccess, loadFail, addTask, deleteTask, editTask } = taskSlice.actions;
 export default taskSlice.reducer;
