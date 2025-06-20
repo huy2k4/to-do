@@ -8,11 +8,13 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Step 2: Serve bằng Nginx
+# Step 2: Serve with Nginx
 FROM nginx:stable-alpine
+
+# Copy built app to nginx public folder
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Optional: custom nginx.conf nếu dùng react-router
+# Optional: custom Nginx config (SPA routing)
 # COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
