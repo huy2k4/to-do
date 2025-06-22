@@ -1,0 +1,76 @@
+.task-board-container {
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(120deg, #c1dfc4, #deecdd);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.task-board-header {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.task-board-label {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.task-sort-select,
+.task-date-filter,
+.task-search-input,
+.task-tag-filter {
+    padding: 8px 14px;
+    font-size: 14px;
+    border: 1px solid var(--border-light);
+    border-radius: 25px;
+    background-color: var(--text-light);
+    color: var(--text-dark);
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.task-sort-select:focus,
+.task-search-input:focus {
+    border-color: var(--secondary-dark);
+    box-shadow: 0 0 6px rgba(9, 132, 227, 0.3);
+    outline: none;
+}
+
+.task-board-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.task-board {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 50vh;
+    overflow-y: auto;
+    padding-right: 2px;
+}
+
+.task-board::-webkit-scrollbar {
+    width: 6px;
+}
+
+.task-board::-webkit-scrollbar-thumb {
+    background-color: var(--primary-light);
+    border-radius: 3px;
+}
+
+.no-task {
+    text-align: center;
+    font-size: 16px;
+    color: var(--text-gray);
+    font-style: italic;
+    padding: 20px 0;
+}

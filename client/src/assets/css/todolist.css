@@ -1,0 +1,91 @@
+.tdl-container {
+    gap: 10px;
+    width: 100%;
+    background-color: #fff;
+    padding: 20px 30px;
+    border-radius: 50px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    min-width: 500px;
+}
+
+
+.tdl-label {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.tdl-label label {
+    font-size: 30px;
+    font-weight: bold;
+    color: #444;
+}
+
+
+.tdl-task {
+    display: flex;
+    flex-direction: inherit;
+    gap: 10px;
+}
+
+
+.tdl-textarea {
+    width: 400px;
+    height: 60px;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    resize: none;
+    transition: border-color 0.3s ease,
+        box-shadow 0.3s ease;
+    overflow-y: hidden;  
+}
+
+.tdl-textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
+    outline: none;
+}
+
+.tdl-add-btn {
+    width: 100px;
+    height: 60px;
+    padding: auto;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: 2px solid #ccc;
+    border-radius: 50px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateX(-10px);
+    pointer-events: none;
+    transition: background-color 0.2s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+.tdl-add-btn.visible {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+.tdl-add-btn:hover {
+    background-color: #0056b3;
+}
+
+
+.task-list {
+    padding-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.task-item {
+    display: flex;
+    flex-direction: column;
+    /* gap: 10px; */
+}
