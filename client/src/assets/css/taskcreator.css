@@ -1,19 +1,32 @@
 .task-creator-container {
     gap: 10px;
     width: 100%;
-    color:aqua;
-    background-color: var(--text-light);
+    color: aqua;
+    /* background-color: var(--text-light); */
     padding: 0px 30px;
     border-radius: 50px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     min-width: 500px;
 }
+ 
 
-.task-crt-label {
+.task-creator-container:hover {
+    box-shadow: 0 12px 40px rgba(0, 255, 255, 0.15), 0 6px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.task-crt-label label {
     margin-top: 10px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: center;
-    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    background: linear-gradient(135deg, var(--text-dark) 0%, #4a90e2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .task-crt-label label {
@@ -61,6 +74,7 @@
     width: 10%;
     text-align: center;
 }
+
 .task-fields-wrapper input,
 .task-fields-wrapper select,
 .task-fields-wrapper textarea {
@@ -77,10 +91,21 @@
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.task-fields-wrapper.show .field-deadline { animation-delay: 0.4s; }
-.task-fields-wrapper.show .field-priority { animation-delay: 0.8s; }
-.task-fields-wrapper.show .field-tags    { animation-delay: 1.2s; }
-.task-fields-wrapper.show .field-notes   { animation-delay: 1.6s; }
+.task-fields-wrapper.show .field-deadline {
+    animation-delay: 0.4s;
+}
+
+.task-fields-wrapper.show .field-priority {
+    animation-delay: 0.8s;
+}
+
+.task-fields-wrapper.show .field-tags {
+    animation-delay: 1.2s;
+}
+
+.task-fields-wrapper.show .field-notes {
+    animation-delay: 1.6s;
+}
 
 @keyframes fadeInUp {
     to {
@@ -108,29 +133,32 @@
 .task-crt-priority:focus,
 .task-crt-tags:focus,
 .task-crt-notes:focus {
+    border-radius: 20px;
+
     border-color: var(--secondary-dark);
     box-shadow: 0 0 6px rgba(9, 132, 227, 0.3);
     outline: none;
 }
+
 .tag-input-group {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-grow: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-grow: 1;
 }
 
 .task-tag-color-select {
-  width: 50px;
-  height: 100%;
-  /* padding: 0; */
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  appearance: none;
-  cursor: pointer;
-  background-color: white;
-  background-image: none;
-  outline: none;
-  overflow: hidden;
+    width: 50px;
+    height: 100%;
+    /* padding: 0; */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    appearance: none;
+    cursor: pointer;
+    background-color: white;
+    background-image: none;
+    outline: none;
+    overflow: hidden;
 }
 
 .task-crt-add-btn {
@@ -192,78 +220,119 @@
     resize: none;
     overflow-y: hidden;
 }
+
 /* Tag nhập nhiều dòng */
 .tag-input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
 }
 
 /* Nhóm từng ô tag */
 .single-tag-input {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
 }
 
 /* Ô input tên tag */
 .single-tag-input input {
- width: 70%;
-  flex-grow: 1;
-  padding: 10px 12px;
-  font-size: 12px;
-  border: 1px solid var(--border-light);
-  border-radius: 50px;
-  background-color: var(--text-light);
-  color: var(--text-dark);
+    width: 70%;
+    flex-grow: 1;
+    padding: 10px 12px;
+    font-size: 12px;
+    border: 1px solid var(--border-light);
+    border-radius: 50px;
+    background-color: var(--text-light);
+    color: var(--text-dark);
 }
+
 .single-tag-input select {
-  width: 20%;
-  max-width: 30px;
-  height: 30px;
-  appearance: none;  
-  border: 1px solid var(--border-light);
-  border-radius: 50px;
-  cursor: pointer;
+    width: 20%;
+    max-width: 30px;
+    height: 30px;
+    appearance: none;
+    border: 1px solid var(--border-light);
+    border-radius: 50px;
+    cursor: pointer;
 }
 
 /* Nút thêm thẻ */
+/* .tag-input-group>button {
+    align-self: flex-start;
+    padding: 6px 12px;
+    font-size: 12px;
+    background-color: var(--primary);
+    color: var(--text-light);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+} */
 .tag-input-group > button {
-  align-self: flex-start;
-  padding: 6px 12px;
-  font-size: 12px;
-  background-color: var(--primary);
-  color: var(--text-light);
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+    align-self: flex-start;
+    padding: 6px 12px;
+    font-size: 12px;
+    background: linear-gradient(135deg, var(--primary) 0%, #4a90e2 100%);
+    color: var(--text-light);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
 }
-
-.tag-input-group > button:hover {
-  background-color: var(--primary-light);
+.tag-input-group>button:hover {
+    background-color: var(--primary-light);
 }
 
 /* Nút xoá thẻ */
+/* .single-tag-input button {
+    background-color: transparent;
+    color: #e74c3c;
+    border: none;
+    border-radius: 30px;
+    width: 30px;
+    height: 30px;
+    font-size: 10px;
+    line-height: 1;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
 .single-tag-input button {
-  background-color: transparent;
-  color: #e74c3c;
-  border: none;
-  border-radius: 30px;
-  width: 30px;
-  height: 30px;
-  font-size: 10px;
-  line-height: 1;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    background: linear-gradient(135deg, transparent 0%, rgba(231, 76, 60, 0.1) 100%);
+    color: #e74c3c;
+    border: 1px solid transparent;
+    border-radius: 30px;
+    width: 30px;
+    height: 30px;
+    font-size: 10px;
+    line-height: 1;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+}
+.single-tag-input button:hover {
+    background-color: #f39890;
+    color: #fff;
+}
+* {
+    scroll-behavior: smooth;
 }
 
-.single-tag-input button:hover {
-  background-color: #f39890;
-color: #fff;
+/* Enhanced focus indicators */
+*:focus-visible {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+    border-radius: 4px;
 }

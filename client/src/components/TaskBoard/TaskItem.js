@@ -3,10 +3,12 @@ import '../../assets/css/taskitem.css';
 import { Trash2, CheckCircle } from 'lucide-react';
 import ConfirmDeleteModal from '../Modals/ConfirmDeleteModal';
 import EditTaskModal from '../Modals/EditTaskModal';
+import { useSelector } from 'react-redux';
 
 export default function TaskItem({ task, handleDelete, handleToggleDone, handleEdit }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const currentUser = useSelector(state => state.user.currentUser);
 
   function getDeadlineStatus(deadlineStr) {
     const today = new Date();
@@ -23,12 +25,12 @@ export default function TaskItem({ task, handleDelete, handleToggleDone, handleE
   }
 
   const handleDeleteConfirmed = () => {
-    handleDelete(task.id);
+    handleDelete(currentUser.id, task.id);
     setShowDeleteModal(false);
   };
 
   const handleEditConfirmed = (updatedValues) => {
-    handleEdit(task.id, updatedValues);
+    handleEdit(currentUser.id, task.id, updatedValues);
     setShowEditModal(false);
   };
 
@@ -92,7 +94,7 @@ export default function TaskItem({ task, handleDelete, handleToggleDone, handleE
           </div>
 
           <div
-            onClick={() => handleToggleDone(task)}
+            onClick={() => handleToggleDone(currentUser.id, task)}
             className="tdl-done-btn"
             title="Xong"
           >

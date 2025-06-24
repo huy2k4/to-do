@@ -23,8 +23,6 @@ export default function StatsPage() {
           Thống kê
         </button>
       </div>
-
-      {/* Nội dung sẽ được render ở đây tùy theo route con */}
       <Outlet />
     </div>
   );

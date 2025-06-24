@@ -1,8 +1,13 @@
 import axios from 'axios';
 
-const API_BASE = 'https://6854c9506a6ef0ed66300b4d.mockapi.io/api/tasks';
+const API_BASE = 'https://6854c9506a6ef0ed66300b4d.mockapi.io/api/users';
 
-export const fetchTasksApi = () => axios.get(API_BASE);
-export const addTaskApi = (task) => axios.post(API_BASE, task);
-export const deleteTaskApi = (id) => axios.delete(`${API_BASE}/${String(id)}`);
-export const updateTaskApi = (id, updates) => axios.put(`${API_BASE}/${id}`, updates);
+const taskService = {
+    getAll: (userId) => axios.get(`${API_BASE}/${userId}/tasks`),
+    getByUserId: (userId) => axios.get(`${API_BASE}/${userId}/tasks`),
+    add: (userId, task) => axios.post(`${API_BASE}/${userId}/tasks`, task),
+    delete: (userId, taskId) => axios.delete(`${API_BASE}/${userId}/tasks/${taskId}`),
+    update: (userId, taskId, updates) => axios.put(`${API_BASE}/${userId}/tasks/${taskId}`, updates),
+};
+
+export default taskService;

@@ -6,12 +6,13 @@ import { selectCompletedTasks } from '../../redux/selectors/taskSelector';
 
 export default function CompletedTaskBoard() {
   const dispatch = useDispatch();
+  // const currentUser = useSelector(state => state.user.currentUser);
   const completedTasks = useSelector(selectCompletedTasks);
 
-  const handleToggleDone = useCallback((task) => {
+  const handleToggleDone = useCallback((userId, task) => {
     dispatch({
       type: 'task/updateTask',
-      payload: { id: task.id, isDone: false },
+      payload: { userId, id: task.id, isDone: false },
     });
   }, [dispatch]);
 
@@ -30,7 +31,7 @@ export default function CompletedTaskBoard() {
             <CompletedTaskItem
               key={task.id}
               task={task}
-              handleToggleDone={() => handleToggleDone(task)}
+              handleToggleDone={handleToggleDone}
             />
           ))
         )}

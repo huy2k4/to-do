@@ -1,13 +1,7 @@
-// src/redux/features/tasks/taskSaga.js
 import { call, put, takeEvery } from 'redux-saga/effects';
+import taskService from '../../services/taskService';
 import {
-  fetchTasksApi,
-  addTaskApi,
-  deleteTaskApi,
-  updateTaskApi,
-} from '../../services/taskService';
-
-import {
+  setUserId,
   loadSuccess,
   loadFail,
   addTask,
@@ -15,41 +9,54 @@ import {
   editTask,
 } from '../slices/taskSlice';
 
-// GET
-function* fetchTasks() {
+function* fetchTasks(action) {
   try {
-    const response = yield call(fetchTasksApi);
+    const userId = action.payload;
+    if (!userId) throw new Error('Thiếu userId khi fetchTasks');
+
+    const response = yield call(taskService.getByUserId, userId);
+    console.log('API Response:', response.data);
+
+    yield put(setUserId(userId));    // Set userId vào state
     yield put(loadSuccess(response.data));
   } catch (e) {
     yield put(loadFail(e.message));
   }
 }
 
-// POST
+
 function* createTask(action) {
   try {
-    const response = yield call(addTaskApi, action.payload);
+    const { userId, ...task } = action.payload;
+    if (!userId) throw new Error('Thiếu userId khi createTask');
+
+    const response = yield call(taskService.add, userId, task);
     yield put(addTask(response.data));
   } catch (e) {
     yield put(loadFail(e.message));
   }
 }
 
-// DELETE
+// Xoá task
 function* removeTask(action) {
   try {
-    yield call(deleteTaskApi, action.payload);
-    yield put(deleteTask(action.payload));
+    const { userId, taskId } = action.payload;
+    if (!userId || !taskId) throw new Error('Thiếu userId hoặc taskId khi removeTask');
+
+    yield call(taskService.delete, userId, taskId);
+    yield put(deleteTask(taskId));
   } catch (e) {
     yield put(loadFail(e.message));
   }
 }
 
-// PUT
+
 function* updateTask(action) {
   try {
-    const { id, ...updates } = action.payload;
-    yield call(updateTaskApi, id, updates);
+    const { userId, id, ...updates } = action.payload;
+    if (!userId || !id) throw new Error('Thiếu userId hoặc taskId khi updateTask');
+
+    yield call(taskService.update, userId, id, updates);
     yield put(editTask(action.payload));
   } catch (e) {
     yield put(loadFail(e.message));

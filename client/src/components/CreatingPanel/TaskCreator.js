@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../../assets/css/taskcreator.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTask } from '../../redux/slices/taskSlice';
+// import { addTask } from '../../redux/slices/taskSlice';
 import { addTag } from '../../redux/slices/tagSlice';
+// import {loadFromStograge} from '../../redux/slices/userSlice';
 
 export default function TaskCreator() {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ export default function TaskCreator() {
     '#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5',
     '#2196f3', '#009688', '#4caf50', '#ff9800', '#795548'
   ];
-
+  const currentUser = useSelector(state => state.user.currentUser);
   const [content, setContent] = useState('');
   const today = new Date().toISOString().split('T')[0];
   const [deadline, setDeadline] = useState(today);
@@ -70,6 +71,10 @@ export default function TaskCreator() {
 
   const handleAddTask = () => {
     if (content.trim() === '') return;
+    if (!currentUser) {
+      alert('Phải đăng nhập trước khi tạo task');
+      return;
+    }
 
     const finalTags = tagsInput
       .filter(tag => tag.name.trim() !== '')
@@ -82,6 +87,7 @@ export default function TaskCreator() {
       tags: finalTags,
       notes,
       isDone: false,
+      userId: currentUser.id,
     };
 
     dispatch({ type: 'task/createTask', payload: newTask });
@@ -171,19 +177,19 @@ export default function TaskCreator() {
                     ref={index === 0 ? tagsRef : null}
                   />
                   <select
-                  style={{
-                  backgroundColor: tag.color
-                }}
+                    style={{
+                      backgroundColor: tag.color
+                    }}
                     value={tag.color}
                     onChange={(e) => handleTagChange(index, 'color', e.target.value)}
                   >
                     {tagColors.map((color) => (
-                      
+
                       <option style={{
-                      backgroundColor: color,
-                      color: 'transparent',
-                      fontSize: '0px'
-                    }} key={color} value={color}
+                        backgroundColor: color,
+                        color: 'transparent',
+                        fontSize: '0px'
+                      }} key={color} value={color}
                       ></option>
                     ))}
                   </select>

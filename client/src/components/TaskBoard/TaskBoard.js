@@ -6,14 +6,21 @@ import '../../assets/css/taskboard.css';
 
 export default function TaskBoard() {
   const dispatch = useDispatch();
-  const tasks = useSelector((state) => state.tasks.items || []);
+  const currentUser = useSelector((state) => state.user.currentUser);
+  console.log(currentUser);
+  const tasks = useSelector(state => {
+    console.log(state);
+    return state.tasks.items || []
+  });
+
+  console.log(tasks);
   const tags = Array.from(
-  new Map(
-    tasks
-      .flatMap(task => task.tags || [])
-      .map(tag => [tag.name.toLowerCase(), tag]) // tránh trùng theo name
-  ).values()
-);
+    new Map(
+      tasks
+        .flatMap(task => task.tags || [])
+        .map(tag => [tag.name.toLowerCase(), tag])
+    ).values()
+  );
 
   const [sortBy, setSortBy] = useState('none');
   const [searchTerm, setSearchTerm] = useState('');
@@ -21,38 +28,38 @@ export default function TaskBoard() {
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
 
-  const priorityOrder = { high: 3, medium: 2, low: 1 };
-
   const handleDelete = useCallback(
-    (id) => dispatch({ type: 'task/removeTask', payload: id }),
-    [dispatch]
+    (id) => dispatch({ type: 'task/removeTask', payload: { userId: currentUser.id, taskId: id } }),
+    [dispatch, currentUser]
   );
 
   const handleToggleDone = useCallback(
     (task) =>
       dispatch({
         type: 'task/updateTask',
-        payload: { id: task.id, isDone: !task.isDone },
+        payload: { userId: currentUser.id, id: task.id, isDone: !task.isDone },
       }),
-    [dispatch]
+    [dispatch, currentUser]
   );
 
   const handleEdit = useCallback(
     (id, values) =>
       dispatch({
         type: 'task/updateTask',
-        payload: { id, ...values },
+        payload: { userId: currentUser.id, id, ...values },
       }),
-    [dispatch]
+    [dispatch, currentUser]
   );
 
   const filteredTasks = useSelector(
-  makeFilteredTasksSelector({ searchTerm, sortBy, filterTagId, fromDate, toDate })
-);
+    makeFilteredTasksSelector({ searchTerm, sortBy, filterTagId, fromDate, toDate })
+  );
 
   useEffect(() => {
-    dispatch({ type: 'task/fetchTasks' });
-  }, [dispatch]);
+    if (currentUser?.id) {
+      dispatch({ type: 'task/fetchTasks', payload: currentUser.id });
+    }
+  }, [dispatch, currentUser]);
 
   return (
     <div className="task-board-container">
