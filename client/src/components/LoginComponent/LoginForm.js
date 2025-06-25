@@ -18,9 +18,10 @@ export default function LoginForm() {
         try {
             const res = await userService.getAll();
             const user = res.data.find(u => u.username === username && u.password === password);
-
+            localStorage.setItem('user', JSON.stringify(user));
             if (user) {
                 dispatch(loginSuccess(user));
+                localStorage.setItem('user', JSON.stringify(user));
                 navigate('/');
             } else {
                 setError('Tài khoản hoặc mật khẩu không đúng');
@@ -34,13 +35,13 @@ export default function LoginForm() {
     };
 
     return (
-        <form className="login-form"autoComplete="off" onSubmit={handleLogin}>
+        <form className="login-form" autoComplete="off" onSubmit={handleLogin}>
             <label className="login-form-label">ĐĂNG NHẬP</label>
 
             <div className="login-form-group">
                 <label className="login-form-label">Tài khoản</label>
                 <input
-                autoComplete="new-password"
+                    autoComplete="new-password"
                     name="username"
                     placeholder="Tên đăng nhập"
                     value={username}
@@ -51,7 +52,7 @@ export default function LoginForm() {
             <div className="login-form-group">
                 <label className="login-form-label">Mật khẩu</label>
                 <input
-                autoComplete="new-password"
+                    autoComplete="new-password"
                     type="password"
                     name="password"
                     placeholder="Mật khẩu"

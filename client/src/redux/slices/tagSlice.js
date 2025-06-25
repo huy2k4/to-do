@@ -3,9 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 const tagSlice = createSlice({
   name: 'tags',
   initialState: {
-    items: [], 
+    items: [],
   },
   reducers: {
+    clearTags: (state) => {
+      state.items = [];
+    },
+
     addTag: (state, action) => {
       state.items.push(action.payload);
     },
@@ -22,6 +26,7 @@ const tagSlice = createSlice({
 });
 
 export const {
+  clearTags,
   addTag,
   updateTag,
   deleteTag,

@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../../assets/css/taskcreator.css';
 import { useDispatch, useSelector } from 'react-redux';
-// import { addTask } from '../../redux/slices/taskSlice';
 import { addTag } from '../../redux/slices/tagSlice';
-// import {loadFromStograge} from '../../redux/slices/userSlice';
 
 export default function TaskCreator() {
   const dispatch = useDispatch();

@@ -54,7 +54,10 @@ export default function EditTaskModal({ initialValues, onConfirm, onCancel }) {
     const finalTags = tagNames.map(getOrCreateTag);
 
     onConfirm({
-      ...values,
+      content: values.content,
+      priority: values.priority,
+      deadline: values.deadline,
+      notes: values.notes,
       tags: finalTags,
     });
   };

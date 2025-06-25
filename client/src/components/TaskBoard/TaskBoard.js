@@ -7,13 +7,13 @@ import '../../assets/css/taskboard.css';
 export default function TaskBoard() {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
-  console.log(currentUser);
+  // console.log(currentUser);
   const tasks = useSelector(state => {
-    console.log(state);
+    // console.log(state);
     return state.tasks.items || []
   });
 
-  console.log(tasks);
+  // console.log(tasks);
   const tags = Array.from(
     new Map(
       tasks
@@ -42,14 +42,16 @@ export default function TaskBoard() {
     [dispatch, currentUser]
   );
 
-  const handleEdit = useCallback(
-    (id, values) =>
-      dispatch({
-        type: 'task/updateTask',
-        payload: { userId: currentUser.id, id, ...values },
-      }),
-    [dispatch, currentUser]
-  );
+const handleEdit = useCallback(
+  (id, values) =>
+    dispatch({
+      type: 'tasks/updateTask',
+      payload: { userId: currentUser.id, id, ...values },
+    }),
+  [dispatch, currentUser]
+);
+
+
 
   const filteredTasks = useSelector(
     makeFilteredTasksSelector({ searchTerm, sortBy, filterTagId, fromDate, toDate })

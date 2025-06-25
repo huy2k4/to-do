@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Logo from './Logo';
 import Navbar from './Navbar';
@@ -7,16 +7,7 @@ import '../../../assets/css/header.css';
 
 export default function Header() {
     const navigate = useNavigate();
-    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('user'));
-
-    useEffect(() => {
-        const handleStorageChange = () => {
-            setIsLoggedIn(!!localStorage.getItem('user'));
-        };
-
-        window.addEventListener('storage', handleStorageChange);
-        return () => window.removeEventListener('storage', handleStorageChange);
-    }, []);
+    const currentUser = useSelector(state => state.user.currentUser);
 
     const handleProfileClick = () => {
         navigate('/profile');
@@ -32,7 +23,7 @@ export default function Header() {
             <Navbar/>
             <div className="profile-section" style={{ cursor: 'pointer' }}>
                 <i className="fa fa-user-circle"></i>
-                {isLoggedIn ? (
+                {currentUser ? (
                     <div onClick={handleProfileClick}>
                         <UserProfile />
                     </div>

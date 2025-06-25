@@ -29,10 +29,11 @@ export default function TaskItem({ task, handleDelete, handleToggleDone, handleE
     setShowDeleteModal(false);
   };
 
-  const handleEditConfirmed = (updatedValues) => {
-    handleEdit(currentUser.id, task.id, updatedValues);
-    setShowEditModal(false);
-  };
+const handleEditConfirmed = (updatedValues) => {
+  handleEdit(task.id, updatedValues);
+  setShowEditModal(false);
+};
+
 
   const deadlineStatus = task.deadline ? getDeadlineStatus(task.deadline) : null;
   const taskTags = Array.isArray(task.tags) ? task.tags : [];

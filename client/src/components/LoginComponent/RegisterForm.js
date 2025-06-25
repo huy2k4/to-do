@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import '../../assets/css/register.css'
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import '../../assets/css/register.css';
+
 export default function RegisterForm() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const currentUser = useSelector(state => state.user.currentUser);
 
     const [form, setForm] = useState({
         username: '',
@@ -27,6 +31,12 @@ export default function RegisterForm() {
         setIsSubmitEnabled(allFieldsFilled && passwordsMatch && !hasErrors);
     }, [form, errors]);
 
+    useEffect(() => {
+        if (currentUser) {
+            navigate('/'); // Chuyển qua trang chính
+        }
+    }, [currentUser, navigate]);
+
     const validateField = (name, value) => {
         let message = '';
         if (name === 'username') message = rules.isRequired(value);
@@ -48,9 +58,6 @@ export default function RegisterForm() {
 
         if (isSubmitEnabled) {
             dispatch({ type: 'user/register', payload: { username: form.username, password: form.password } });
-            alert('Đăng ký thành công!');
-            setForm({ username: '', password: '', confirmPassword: '' });
-            setErrors({});
         }
     };
 

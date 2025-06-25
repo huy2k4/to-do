@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeEvery, select } from 'redux-saga/effects';
 import taskService from '../../services/taskService';
 import {
   setUserId,
@@ -15,7 +15,7 @@ function* fetchTasks(action) {
     if (!userId) throw new Error('Thiếu userId khi fetchTasks');
 
     const response = yield call(taskService.getByUserId, userId);
-    console.log('API Response:', response.data);
+    // console.log('API Response:', response.data);
 
     yield put(setUserId(userId));    // Set userId vào state
     yield put(loadSuccess(response.data));
@@ -53,15 +53,20 @@ function* removeTask(action) {
 
 function* updateTask(action) {
   try {
-    const { userId, id, ...updates } = action.payload;
-    if (!userId || !id) throw new Error('Thiếu userId hoặc taskId khi updateTask');
+    const { id, ...updates } = action.payload;
+
+    const userId = yield select(state => state.user.currentUser.id);
+    if (!userId) throw new Error('Thiếu userId trong store');
+    if (!id) throw new Error('Thiếu taskId khi updateTask');
 
     yield call(taskService.update, userId, id, updates);
-    yield put(editTask(action.payload));
+    yield put(editTask({ userId, id, ...updates }));
   } catch (e) {
     yield put(loadFail(e.message));
   }
 }
+
+
 
 export default function* taskSaga() {
   yield takeEvery('task/fetchTasks', fetchTasks);

@@ -10,11 +10,11 @@ const taskSlice = createSlice({
   reducers: {
     setUserId: (state, action) => {
       state.userId = action.payload;
-      state.items = []; 
+      state.items = [];
     },
 
     loadSuccess: (state, action) => {
-      console.log({state:state.userId});
+      // console.log({state:state.userId});
       state.items = action.payload.filter(t => t.userId === state.userId);
       state.error = null;
     },
@@ -33,6 +33,10 @@ const taskSlice = createSlice({
       state.items = state.items.filter(t => t.id !== action.payload);
     },
 
+    clearTasks: (state) => {
+      state.items = [];
+    },
+
     editTask: (state, action) => {
       const { id, ...updates } = action.payload;
       const task = state.items.find(t => t.id === id);
@@ -47,5 +51,12 @@ const taskSlice = createSlice({
   },
 });
 
-export const { setUserId, loadSuccess, loadFail, addTask, deleteTask, editTask } = taskSlice.actions;
+export const { 
+  clearTasks,
+  setUserId,
+  loadSuccess,
+  loadFail,
+  addTask,
+  deleteTask,
+  editTask } = taskSlice.actions;
 export default taskSlice.reducer;
