@@ -1,5 +1,6 @@
 /* Reset basic */
 @import "tailwindcss";
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,30 +8,24 @@
 }
 
 :root {
-  --primary: #6C5CE7;
-  --primary-light: #A29BFE;
-  --secondary: #00CEFF;
-  --secondary-dark: #0984E3;
-  --bg-light: #f9f9f9;
-  --bg-taskboard:#F9F7F5;
-  --bg-dark: #2D3436;
-  --text-light: #F9F9F9;
-  --text-dark: #2D3436;
-  --text-gray: #636E72;
-  --priority-high: #FFEAEA;
-  --priority-medium: #FFF5DC;
-  --priority-low: #EDEBFF;
-  --completed: #55EFC4;
-  --border-light: #DFE6E9;
-  --border-dark: #636E72;
+  --color-background: #819A91;
+  --color-surface: #A7C1A8;
+  --color-primary: #D1D8BE;
+  --color-accent: #EEEFE0;
+  --color-text-light: #FFFFFF;
+  --color-text-dark: #000000;
+  --priority-high: #F7B5B5;
+  --priority-medium: #FFF2B2;
+  --priority-low: #B5DFF7;
+  --primary-green: #8ab899;
 }
 
-/* App.css */
+
 body {
   width: 100vw;
   font-family: 'Segoe UI', Arial, sans-serif;
-  background-color: var(--bg-light);
-  color: var(--text-dark);
+  background-color: var(--color-background);
+  /* color: var(--color-text-dark); */
   line-height: 1.6;
 }
 
@@ -48,18 +43,19 @@ body {
   flex-direction: row;
   padding: 0px 15px;
   gap: 16px;
-  background-color: var(--bg-light);
+  background-color: var(--color-accent);
 }
 
 /* Panels */
 .left-panel {
+  background-color: var(--color-accent);
   width: 20vw;
   max-height: fit-content;
   padding: 16px;
   border-radius: 20px;
   /* background: white; */
-     /* transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); */
-    /* background: linear-gradient(135deg, var(--text-light) 0%, rgba(255, 255, 255, 0.95) 100%); */
+  /* transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); */
+  /* background: linear-gradient(135deg, var(--text-light) 0%, rgba(255, 255, 255, 0.95) 100%); */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
@@ -68,7 +64,7 @@ body {
   flex: 1;
   padding: 16px;
   border-radius: 20px;
-  background: white;
+  background-color: var(--color-accent);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
@@ -77,7 +73,8 @@ body {
   width: 30vw;
   padding: 16px;
   border-radius: 20px;
-  background: white;
+  background-color: var(--color-accent);
+  background: var(--color-accent);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
@@ -85,7 +82,7 @@ body {
   padding: 12px;
   margin-bottom: 8px;
   border-radius: 8px;
-  border-left: 4px solid var(--border-light);
+  border-left: 4px solid var(--color-text-light);
   transition: all 0.2s ease;
 }
 

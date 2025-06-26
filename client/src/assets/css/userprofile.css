@@ -5,6 +5,7 @@
 }
 
 .username {
+    color: var(--color-text-light);
     font-weight: bold;
 }
 

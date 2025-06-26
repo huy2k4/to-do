@@ -45,12 +45,12 @@ export default function TaskBoard() {
 const handleEdit = useCallback(
   (id, values) =>
     dispatch({
-      type: 'tasks/updateTask',
+      type: 'task/updateTask',
       payload: { userId: currentUser.id, id, ...values },
     }),
   [dispatch, currentUser]
 );
-
+// dispatch({ type: 'task/createTask', payload: newTask });
 
 
   const filteredTasks = useSelector(

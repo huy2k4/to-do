@@ -1,7 +1,7 @@
 .tdl-container {
     gap: 10px;
     width: 100%;
-    background-color: #fff;
+    background-color: var(--color-accent);
     padding: 20px 30px;
     border-radius: 50px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);

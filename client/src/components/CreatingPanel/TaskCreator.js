@@ -101,7 +101,7 @@ export default function TaskCreator() {
   return (
     <div className="task-crt-container" ref={containerRef}>
       <div className="task-crt-label">
-        <label htmlFor="content">Tạo công việc</label>
+        <label>Tạo công việc</label>
       </div>
 
       <div className="task-crt">

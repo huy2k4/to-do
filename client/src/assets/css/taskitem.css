@@ -36,16 +36,23 @@
 }
 
 .priority-high {
-    background-color: var(--priority-high);
+    background: linear-gradient(45deg,
+            var(--color-surface) 70%,
+            var(--priority-high) 100%)
 }
 
 .priority-medium {
-    background-color: var(--priority-medium);
+    background: linear-gradient(45deg,
+            var(--color-surface) 70%,
+            var(--priority-medium) 100%);
 }
 
 .priority-low {
-    background-color: var(--priority-low);
+    background: linear-gradient(45deg,
+            var(--color-surface) 70%,
+            var(--priority-low) 100%);
 }
+
 
 .task-actions {
     opacity: 0;

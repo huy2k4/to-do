@@ -1,34 +1,38 @@
 .app-header {
+  max-height: 70px;
+  width: 100vw;
   display: flex;
   align-items: center;
   padding: 16px;
-  background-color: #f8f8f8;
+  background-color: var(--color-surface);
   /* border-bottom: 1px solid #ccc; */
 }
 
-.app-title {
+/* .app-title {
   display: flex;
   align-items: center;
   gap: 10px;
-}
+} */
 
 .logo {
-  width: 90px;
+  width: 10vw;
   height: 50px;
   object-fit: contain;
 }
 
+/* 
 .title-text {
   font-family: 'Roboto', sans-serif;
   font-size: 24px;
   font-weight: bold;
   color: #e60000;
-}
+} */
 
 .nav-bar {
+  width: 50vw;
   padding-left: 20px;
   margin-right: 40px;
-  background-color: #f8f9fa;
+  /* background-color: #f8f9fa; */
   /* border-bottom: 1px solid #e0e0e0; */
 }
 
@@ -45,7 +49,7 @@
   cursor: pointer;
   text-decoration: none;
   font-weight: 500;
-  color: #333;
+  color: var(--color-text-light);
   padding: 6px 12px;
   border-radius: 6px;
   transition: background-color 0.2s ease, color 0.2s ease;
@@ -62,15 +66,16 @@
   color: white;
   font-weight: 600;
 }
+
 .profile-section {
-    display: flex;
-    width: 60%;
-    justify-content: right;
-    align-items:flex-start;
-    gap: 8px;
-    padding: 8px 12px;
-    border-radius: 6px;
-    transition: background-color 0.3s;
+
+  display: flex;
+  width: 50vw;
+  justify-content: right;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
 }
 
 /* .profile-section:hover {
@@ -78,10 +83,10 @@
 } */
 
 .profile-section i {
-    font-size: 20px;
-    color: #555;
+  font-size: 20px;
+  color: #555;
 }
 
 .profile-section:hover i {
-    color: #000;
+  color: #000;
 }

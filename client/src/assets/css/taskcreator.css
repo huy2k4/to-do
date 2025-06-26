@@ -1,38 +1,29 @@
-.task-creator-container {
-    gap: 10px;
-    width: 100%;
-    color: aqua;
-    /* background-color: var(--text-light); */
+.task-crt-container {
+    /* gap: 10px; */
+    /* width: 100%; */
+    /* color: var(--color-accent); */
+    background: var(--color-accent);
     padding: 0px 30px;
-    border-radius: 50px;
+    border-radius: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    min-width: 500px;
+    /* min-width: 500px; */
 }
- 
 
-.task-creator-container:hover {
+
+/* .task-crt-container:hover {
     box-shadow: 0 12px 40px rgba(0, 255, 255, 0.15), 0 6px 20px rgba(0, 0, 0, 0.08);
     transform: translateY(-2px);
-}
+} */
 
 .task-crt-label label {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    color: var(--text-dark);
+    padding-top: 10px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: center;
     font-size: 20px;
     font-weight: bold;
-    background: linear-gradient(135deg, var(--text-dark) 0%, #4a90e2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.task-crt-label label {
-    font-size: 20px;
-    font-weight: bold;
-    color: var(--text-dark);
 }
 
 .task-fields-wrapper {
@@ -271,7 +262,7 @@
     cursor: pointer;
     transition: background-color 0.2s ease;
 } */
-.tag-input-group > button {
+.tag-input-group>button {
     align-self: flex-start;
     padding: 6px 12px;
     font-size: 12px;
@@ -284,6 +275,7 @@
     position: relative;
     overflow: hidden;
 }
+
 .tag-input-group>button:hover {
     background-color: var(--primary-light);
 }
@@ -322,10 +314,12 @@
     position: relative;
     overflow: hidden;
 }
+
 .single-tag-input button:hover {
     background-color: #f39890;
     color: #fff;
 }
+
 * {
     scroll-behavior: smooth;
 }

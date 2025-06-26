@@ -5,15 +5,15 @@
 }
 
 .cplt-tiblock {
-  background-color: #d3d3e2;
+  /* background-color: #d3d3e2; */
   /* pastel silver-ish */
   border-radius: 20px;
   padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
+  /* transition: background-color 0.3s ease; */
 }
 
 .cplt-tiitem {
