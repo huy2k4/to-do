@@ -42,7 +42,7 @@ export default function TaskItem({ task, handleDelete, handleToggleDone, handleE
     <div className="task-block-container">
       <div
         className={`task-block priority-${task.priority}`}
-        onDoubleClick={() => setShowEditModal(true)}
+        onClick={() => setShowEditModal(true)}
       >
         <div className="item">
           <span className="task-content">
