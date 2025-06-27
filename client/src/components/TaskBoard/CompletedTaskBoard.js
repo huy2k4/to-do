@@ -25,7 +25,7 @@ export default function CompletedTaskBoard() {
       </div>
       <div className="cplt-tb">
         {completedTasks.length === 0 ? (
-          <p className="no-task">Chưa có gì</p>
+          <p className="no-cplt-task"></p>
         ) : (
           completedTasks.map((task) => (
             <CompletedTaskItem

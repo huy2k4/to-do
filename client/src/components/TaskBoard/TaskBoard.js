@@ -8,19 +8,18 @@ export default function TaskBoard() {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
   // console.log(currentUser);
-  const tasks = useSelector(state => {
-    // console.log(state);
-    return state.tasks.items || []
-  });
+  // const tasks = useSelector(state => {
+  //   // console.log(state);
+  //   return state.tasks.items || []
+  // });
 
-  // console.log(tasks);
-  const tags = Array.from(
-    new Map(
-      tasks
-        .flatMap(task => task.tags || [])
-        .map(tag => [tag.name.toLowerCase(), tag])
-    ).values()
-  );
+  // const tags = Array.from(
+  //   new Map(
+  //     tasks
+  //       .flatMap(task => task.tags || [])
+  //       .map(tag => [tag.name.toLowerCase(), tag])
+  //   ).values()
+  // );
 
   const [sortBy, setSortBy] = useState('none');
   const [searchTerm, setSearchTerm] = useState('');
@@ -42,16 +41,14 @@ export default function TaskBoard() {
     [dispatch, currentUser]
   );
 
-const handleEdit = useCallback(
-  (id, values) =>
-    dispatch({
-      type: 'task/updateTask',
-      payload: { userId: currentUser.id, id, ...values },
-    }),
-  [dispatch, currentUser]
-);
-// dispatch({ type: 'task/createTask', payload: newTask });
-
+  const handleEdit = useCallback(
+    (id, values) =>
+      dispatch({
+        type: 'task/updateTask',
+        payload: { userId: currentUser.id, id, ...values },
+      }),
+    [dispatch, currentUser]
+  );
 
   const filteredTasks = useSelector(
     makeFilteredTasksSelector({ searchTerm, sortBy, filterTagId, fromDate, toDate })
@@ -79,41 +76,20 @@ const handleEdit = useCallback(
             onChange={(e) => setSearchTerm(e.target.value)}
           />
 
-          <select
-            className="task-sort-select"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-          >
-            <option value="none">Sắp xếp</option>
-            <option value="priority">Ưu tiên</option>
-            <option value="deadline">Deadline</option>
-          </select>
-
-          <select
-            className="task-tag-filter"
-            value={filterTagId}
-            onChange={(e) => setFilterTagId(e.target.value)}
-          >
-            <option value="">Tất cả thẻ</option>
-            {tags.map((tag) => (
-              <option key={tag.id} value={tag.id}>
-                {tag.name}
-              </option>
-            ))}
-          </select>
-
-          <input
-            type="date"
-            className="task-date-filter"
-            value={fromDate}
-            onChange={(e) => setFromDate(e.target.value)}
-          />
-          <input
-            type="date"
-            className="task-date-filter"
-            value={toDate}
-            onChange={(e) => setToDate(e.target.value)}
-          />
+          <div className="task-sort-buttons">
+            <button
+              className={`task-sort-button ${sortBy === 'priority' ? 'active' : ''}`}
+              onClick={() => setSortBy('priority')}
+            >
+              Ưu tiên
+            </button>
+            <button
+              className={`task-sort-button ${sortBy === 'deadline' ? 'active' : ''}`}
+              onClick={() => setSortBy('deadline')}
+            >
+              Deadline
+            </button>
+          </div>
         </div>
       </div>
 
@@ -131,6 +107,23 @@ const handleEdit = useCallback(
             />
           ))
         )}
+      </div>
+
+      <div className="task-date-picker">
+        <span>Từ</span>
+        <input
+          type="date"
+          className="task-date-filter"
+          value={fromDate}
+          onChange={(e) => setFromDate(e.target.value)}
+        />
+        <span>Đến</span>
+        <input
+          type="date"
+          className="task-date-filter"
+          value={toDate}
+          onChange={(e) => setToDate(e.target.value)}
+        />
       </div>
     </div>
   );

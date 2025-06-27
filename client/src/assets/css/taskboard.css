@@ -1,6 +1,4 @@
 .task-board-container {
-    /* background-color:var(--color-primary); */
-    padding: 10px;
     border-radius: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     background: var(--color-accent);
@@ -9,55 +7,91 @@
 
 .task-board-header {
     margin-bottom: 20px;
+    text-align: start;
+    padding: 12px 0;
+    position: relative;
+}
+
+.task-board-label {
+    padding: 20px 0 0 20px;
     display: flex;
-    flex-direction: column;
-    align-items:baseline;
-    padding-left: 20px;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    letter-spacing: -0.3px;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
 }
 
-.task-board-label span{
-    font-size: 20px;
-    font-weight: bold;
-    color: var(--primary);
+.task-board-label::before {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, var(--primary-green), var(--color-surface));
+    border-radius: 50%;
+    color: var(--color-text-light);
+    font-size: 16px;
+    font-weight: 900;
+    box-shadow:
+        0 3px 8px rgba(138, 184, 153, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    margin-right: 8px;
 }
 
-.task-sort-select,
-.task-date-filter,
-.task-search-input,
-.task-tag-filter {
+
+.task-search-input {
     padding: 8px 14px;
     font-size: 14px;
-    border: 1px solid var(--border-light);
+    border: 1px solid var(--color-surface);
     border-radius: 25px;
-    background-color: var(--text-light);
-    color: var(--text-dark);
-    cursor: pointer;
+    background-color: var(--color-text-light);
+    color: var(--color-text-dark);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.task-sort-select:focus,
 .task-search-input:focus {
-    border-color: var(--secondary-dark);
-    box-shadow: 0 0 6px rgba(9, 132, 227, 0.3);
+    border-color: var(--primary-green);
+    box-shadow: 0 0 6px rgba(var(--rgba-shadow));
     outline: none;
 }
 
-.task-board-controls {
+.task-sort-buttons {
     display: flex;
-    justify-content: center;
+    gap: 10px;
+}
+
+.task-sort-button {
+    padding: 8px 14px;
+    font-size: 14px;
+    border: 1px solid var(--color-surface);
+    border-radius: 25px;
+    background-color: var(--color-text-light);
+    color: var(--color-text-dark);
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.task-sort-button.active {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+}
+
+.task-board-controls {
+    padding: 0 0 0 20px;
+    display: flex;
     align-items: center;
     gap: 10px;
     margin-top: 10px;
-    flex-wrap: wrap;
 }
 
 .task-board {
     display: flex;
     flex-direction: column;
-    gap: 10px;
     max-height: 50vh;
     overflow-y: auto;
-    padding-right: 2px;
+    padding: 0 20px;
 }
 
 .task-board::-webkit-scrollbar {
@@ -65,14 +99,30 @@
 }
 
 .task-board::-webkit-scrollbar-thumb {
-    background-color: var(--primary-light);
+    background-color: var(--color-primary);
     border-radius: 3px;
 }
 
-.no-task {
-    text-align: center;
-    font-size: 16px;
-    color: var(--text-gray);
-    font-style: italic;
-    padding: 20px 0;
+
+.task-date-picker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    justify-content: center;
+}
+
+.task-date-filter {
+    padding: 8px 14px;
+    font-size: 14px;
+    border: 1px solid var(--color-surface);
+    border-radius: 25px;
+    background-color: var(--color-text-light);
+    color: var(--color-text-dark);
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.task-date-filter::-webkit-calendar-picker-indicator {
+    filter: invert(50%) sepia(100%) saturate(400%) hue-rotate(180deg);
 }

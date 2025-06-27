@@ -155,7 +155,7 @@ export default function TaskCreator() {
                   tagsRef.current?.focus();
                 }
               }}
-            >
+            ><option value="" disabled selected>Ưu tiên</option>
               <option value="low">Thấp</option>
               <option value="medium">Trung bình</option>
               <option value="high">Cao</option>
@@ -174,7 +174,10 @@ export default function TaskCreator() {
                     onChange={(e) => handleTagChange(index, 'name', e.target.value)}
                     ref={index === 0 ? tagsRef : null}
                   />
-                  <select
+                  <button type="button" onClick={handleAddTagField}>
+                    +
+                  </button>
+                  {/* <select
                     style={{
                       backgroundColor: tag.color
                     }}
@@ -190,7 +193,7 @@ export default function TaskCreator() {
                       }} key={color} value={color}
                       ></option>
                     ))}
-                  </select>
+                  </select> */}
                   {tagsInput.length > 1 && (
                     <button type="button" onClick={() => handleRemoveTagField(index)}>
                       X
@@ -198,9 +201,7 @@ export default function TaskCreator() {
                   )}
                 </div>
               ))}
-              <button type="button" onClick={handleAddTagField}>
-                Thêm thẻ
-              </button>
+
             </div>
           </div>
 
