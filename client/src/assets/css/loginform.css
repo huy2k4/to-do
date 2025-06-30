@@ -1,6 +1,11 @@
-/* Modern Login Form Styles */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .login-form {
-  width: 500px;
+  width: 50vw;
   max-width: 100%;
   margin: 50px auto;
   padding: 40px;
@@ -45,7 +50,7 @@
   font-size: 24px;
   font-weight: 700;
   color: #1a202c;
-  text-align: center;
+  text-align:start;
   margin-bottom: 30px;
   background: linear-gradient(135deg, #667eea, #764ba2);
   -webkit-background-clip: text;
@@ -209,12 +214,11 @@
   transform: translateY(0);
 }
 
-/* Responsive Design */
 @media (max-width: 480px) {
   .login-form {
     margin: 20px;
-    padding: 30px 20px;
-    max-width: none;
+    padding: 20px;
+    width: 80vw;
   }
   
   .login-form-label {
@@ -230,55 +234,5 @@
   .login-submit-btn {
     padding: 14px;
     font-size: 15px;
-  }
-}
-
-/* Dark theme support */
-@media (prefers-color-scheme: dark) {
-  .login-form {
-    background: linear-gradient(145deg, #1a202c, #2d3748);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  .login-form-label {
-    color: #f7fafc;
-    background: linear-gradient(135deg, #81e6d9, #9f7aea);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  
-  .login-form-group label {
-    color: #e2e8f0;
-  }
-  
-  .login-form-group input {
-    background: #2d3748;
-    border-color: #4a5568;
-    color: #f7fafc;
-  }
-  
-  .login-form-group input:focus {
-    border-color: #81e6d9;
-    box-shadow: 
-      0 0 0 3px rgba(129, 230, 217, 0.1),
-      0 4px 12px rgba(129, 230, 217, 0.15);
-  }
-  
-  .login-form-footer {
-    border-top-color: #4a5568;
-  }
-  
-  .login-form-footer span {
-    color: #a0aec0;
-  }
-  
-  .link-btn {
-    color: #81e6d9;
-  }
-  
-  .link-btn:hover {
-    color: #68d391;
-    background: rgba(129, 230, 217, 0.1);
   }
 }

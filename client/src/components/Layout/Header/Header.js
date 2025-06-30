@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Logo from './Logo';
@@ -7,7 +8,12 @@ import '../../../assets/css/header.css';
 
 export default function Header() {
     const navigate = useNavigate();
-    const currentUser = useSelector(state => state.user.currentUser);
+    const currentUser = useSelector((state) => state.user.currentUser);
+    const [isNavOpen, setIsNavOpen] = useState(false);
+
+    const toggleNav = () => {
+        setIsNavOpen(!isNavOpen);
+    };
 
     const handleProfileClick = () => {
         navigate('/profile');
@@ -19,20 +25,16 @@ export default function Header() {
 
     return (
         <header className="app-header">
-            <Logo/>
-            <Navbar/>
-            <div className="profile-section" style={{ cursor: 'pointer' }}>
-                <i className="fa fa-user-circle"></i>
-                {currentUser ? (
-                    <div onClick={handleProfileClick}>
-                        <UserProfile />
-                    </div>
-                ) : (
-                    <a onClick={handleLoginClick} style={{ marginLeft: '8px', textDecoration: 'underline', color: 'blue' }}>
-                        Đăng nhập
-                    </a>
-                )}
+            <div className="menu-toggle" onClick={toggleNav}>
+                <i className="fa fa-bars"></i>
             </div>
+            <Logo />
+            <Navbar isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
+            <UserProfile
+                currentUser={currentUser}
+                handleProfileClick={handleProfileClick}
+                handleLoginClick={handleLoginClick}
+            />
         </header>
     );
 }

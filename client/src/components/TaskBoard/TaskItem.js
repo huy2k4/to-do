@@ -87,7 +87,11 @@ export default function TaskItem({ task, handleDelete, handleToggleDone, handleE
 
         <div className="task-actions">
           <div
-            onClick={() => setShowDeleteModal(true)}
+
+            onClick={(event) => {
+              event.stopPropagation();
+              setShowDeleteModal(true);
+            }}
             className="tdl-del-btn"
             title="Xoá"
           >
@@ -95,8 +99,11 @@ export default function TaskItem({ task, handleDelete, handleToggleDone, handleE
           </div>
 
           <div
-            onClick={() => handleToggleDone(currentUser.id, task)}
-            className="tdl-done-btn"
+            onClick={(event) => {
+              event.stopPropagation();
+              handleToggleDone(currentUser.id, task);
+            }}
+            className="tdl-done-btn tdlbtn"
             title="Xong"
           >
             <CheckCircle size={24} strokeWidth={2.2} />

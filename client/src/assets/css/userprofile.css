@@ -1,23 +1,84 @@
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+}
+
+.profile-section i {
+  font-size: clamp(16px, 4vw, 20px);
+  color: #555;
+}
+
 .user-profile {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .username {
-    color: var(--color-text-light);
-    font-weight: bold;
+  color: var(--color-text-light);
+  font-weight: bold;
+  font-size: clamp(12px, 3vw, 14px);
 }
 
 .logout-btn {
-    background-color: #ff4d4d;
-    border: none;
-    padding: 5px 10px;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
+  background-color: #ff4d4d;
+  border: none;
+  padding: 5px 10px;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  font-size: clamp(10px, 2.5vw, 12px);
 }
 
-.logout-btn:hover {
-    background-color: #e60000;
+@media (max-width: 768px) {
+  .profile-section {
+    padding: 6px 10px;
+    gap: 6px;
+  }
+
+  .profile-section i {
+    font-size: clamp(14px, 3.5vw, 18px);
+  }
+
+  .user-profile {
+    gap: 8px;
+  }
+
+  .username {
+    font-size: clamp(11px, 2.8vw, 13px);
+  }
+
+  .logout-btn {
+    padding: 4px 8px;
+    font-size: clamp(9px, 2.3vw, 11px);
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-section {
+    padding: 4px 8px;
+    gap: 4px;
+  }
+
+  .profile-section i {
+    font-size: clamp(12px, 3vw, 16px);
+  }
+
+  .user-profile {
+    gap: 6px;
+  }
+
+  .username {
+    font-size: clamp(10px, 2.5vw, 12px);
+  }
+
+  .logout-btn {
+    padding: 3px 6px;
+    font-size: clamp(8px, 2vw, 10px);
+  }
 }

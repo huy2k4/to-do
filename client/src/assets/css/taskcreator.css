@@ -1,20 +1,10 @@
 .task-crt-container {
-    /* gap: 10px; */
-    /* width: 100%; */
-    /* color: var(--color-accent); */
     background: var(--color-accent);
-/* background: #e74c3c; */
-    /* padding: 0px 30px; */
     border-radius: 20px;
-    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); */
-    /* min-width: 500px; */
+    padding: 16px;
+    width: min(100%, 600px);
+    margin: 0 auto;
 }
-
-
-/* .task-crt-container:hover {
-    box-shadow: 0 12px 40px rgba(0, 255, 255, 0.15), 0 6px 20px rgba(0, 0, 0, 0.08);
-    transform: translateY(-2px);
-} */
 
 .task-crt-label label {
     color: var(--text-dark);
@@ -22,13 +12,12 @@
     margin-bottom: 10px;
     display: flex;
     justify-content: center;
-    font-size: 20px;
+    font-size: clamp(18px, 4vw, 22px);
     font-weight: bold;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .task-fields-wrapper {
-    /* background-color: #4a90e2; */
     max-height: 0;
     overflow: hidden;
     opacity: 0;
@@ -45,21 +34,12 @@
 }
 
 .task-field {
-    /* max-width:80%; */
     padding: 5px;
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 8px;
 }
-
-/* .task-field label {
-
-    font-size: 0.9rem;
-    font-weight: bold;
-    margin-bottom: 4px;
-    color: var(--text-dark);
-} */
 
 .field-icon {
     padding-right: 5%;
@@ -77,10 +57,10 @@
     animation: fadeInUp 0.4s forwards;
     background-color: var(--color-primary);
     border-radius: 20px;
-    color: var(--text-dark);
-    /* border: 1px solid var(--border-light); */
+    /* color: var(--text-dark); */
     padding: 12px;
     font-size: 12px;
+    border: transparent;
 }
 
 .task-fields-wrapper.show .field-deadline {
@@ -107,18 +87,18 @@
 }
 
 .task-crt-type {
-    padding:10px 0 0 10px;
+    padding: 10px 0 0 10px;
     width: 90%;
     height: 50px;
     margin: 5%;
     font-size: 16px;
-    /* border: 1px solid var(--border-light); */
     border-radius: 20px;
     resize: none;
-    /* background-color: var(--text-light); */
     color: var(--text-dark);
     overflow-y: hidden;
+    border: none;
 }
+
 .task-crt-type::placeholder {
     color: gray;
     font-size: 14px;
@@ -127,23 +107,63 @@
 }
 
 .tag-input-group {
+    flex-wrap: nowrap;
     display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-grow: 1;
+    flex-direction: column;
+    gap: 1px;
+    height: fit-content;
+    width: 100%;
 }
 
-.task-tag-color-select {
-    width: 50px;
-    height: 100%;
-    /* border: 1px solid #ccc; */
-    border-radius: 6px;
-    appearance: none;
+.single-tag-input {
+    flex-wrap: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    border: 1px solid var(--color-background);
+    border-radius: 30px;
+    padding: 8px;
+    height: fit-content;
+}
+
+.single-tag-input input {
+    width: 70%;
+    flex-grow: 1;
+    /* padding: 10px 12px; */
+    font-size: 12px;
+    border-radius: 30px;
+    background-color: var(--text-light);
+    /* color: var(--text-dark); */
+    /* border: none; */
+}
+
+.tag-input-group > button {
+    align-self: flex-start;
+    padding: 6px 12px;
+    font-size: 12px;
+    background: linear-gradient(135deg, var(--primary) 0%, #4a90e2 100%);
+    color: var(--text-light);
+    border: none;
+    border-radius: 10px;
     cursor: pointer;
-    background-color: white;
-    background-image: none;
-    outline: none;
-    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.single-tag-input button {
+    background: linear-gradient(135deg, transparent 0%, rgba(231, 76, 60, 0.1) 100%);
+    color: #e74c3c;
+    border-radius: 30px;
+    width: 30px;
+    height: 30px;
+    font-size: 10px;
+    line-height: 1;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .task-crt-add-btn {
@@ -154,22 +174,18 @@
     font-weight: bold;
     color: var(--color-text-light);
     background-color: var(--btn-crt);
-    /* border: 2px solid var(--color-text-light); */
     border-radius: 10px;
     cursor: pointer;
     opacity: 0;
     transform: translateY(-10px);
     pointer-events: none;
+    border: none;
 }
 
 .task-crt-add-btn.visible {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
-}
-
-.task-crt-add-btn:hover {
-    background-color: var(--primary-light);
 }
 
 .task-list {
@@ -185,139 +201,112 @@
     flex-direction: column;
 }
 
-.task-crt-deadline {
-    width: 100%;
-    height: 40px;
-    padding: 12px;
-    font-size: 10px;
-    /* border: 1px solid var(--border-light); */
-    border-radius: 10px;
-    background-color: var(--text-light);
-    color: var(--text-dark);
-}
-
-.task-crt-priority {
-    width: 100%;
-    height: 40px;
-    padding: 12px;
-    font-size: 10px;
-    /* border: 1px solid var(--border-light); */
-    border-radius: 10px;
-    background-color: var(--text-light);
-    color: var(--text-dark);
-}
-
+.task-crt-deadline,
+.task-crt-priority,
 .task-crt-notes {
     width: 100%;
     height: 40px;
     padding: 12px;
     font-size: 10px;
-    /* border: 1px solid var(--border-light); */
     border-radius: 10px;
     background-color: var(--text-light);
     color: var(--text-dark);
+    border: none;
 }
-
 
 .task-crt-notes {
     resize: none;
     overflow-y: hidden;
 }
 
-.tag-input-group {
-    border:var(--color-background) ;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    width: 100%;
+
+@media (max-width: 768px) {
+    .task-crt-container {
+        padding: 12px;
+    }
+    
+    .task-crt-type {
+        width: 95%;
+        margin: 2.5%;
+        font-size: 14px;
+    }
+    
+    .field-icon {
+        font-size: 1rem;
+        width: 12%;
+    }
+    
+    .task-fields-wrapper input,
+    .task-fields-wrapper select,
+    .task-fields-wrapper textarea {
+        padding: 10px;
+        font-size: 11px;
+    }
+    
+    .single-tag-input {
+        padding: 6px;
+    }
+    
+    .single-tag-input input {
+        padding: 8px 10px;
+        font-size: 11px;
+    }
+    
+    .single-tag-input button {
+        width: 26px;
+        height: 26px;
+        font-size: 9px;
+    }
 }
 
-.single-tag-input {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
+@media (max-width: 480px) {
+    .task-crt-container {
+        padding: 10px;
+    }
+    
+    .task-crt-label label {
+        font-size: clamp(16px, 3.5vw, 18px);
+    }
+    
+    .task-crt-type {
+        width: 100%;
+        margin: 0;
+        padding: 8px;
+        font-size: 13px;
+    }
+    
+    .field-icon {
+        font-size: 0.9rem;
+        width: 15%;
+    }
+    
+    .task-fields-wrapper input,
+    .task-fields-wrapper select,
+    .task-fields-wrapper textarea {
+        padding: 8px;
+        font-size: 10px;
+    }
+    
+    .single-tag-input {
+        flex-wrap: nowrap;
+        gap: 6px;
+    }
+    
+    .single-tag-input input {
+        width: 100%;
+        padding: 6px 8px;
+        font-size: 10px;
+    }
+    
+    .single-tag-input button {
+        width: 24px;
+        height: 24px;
+        font-size: 8px;
+    }
+    
+    .task-crt-add-btn {
+        height: 40px;
+        font-size: 13px;
+    }
+    
 }
-
-.single-tag-input input {
-    width: 70%;
-    flex-grow: 1;
-    padding: 10px 12px;
-    font-size: 12px;
-    border-radius: 50px;
-    background-color: var(--text-light);
-    color: var(--text-dark);
-}
-
-/* .single-tag-input select {
-    width: 20%;
-    max-width: 30px;
-    height: 30px;
-    appearance: none;
-    border: 1px solid var(--border-light);
-    border-radius: 50px;
-    cursor: pointer;
-} */
-
-.tag-input-group > button {
-    align-self: flex-start;
-    padding: 6px 12px;
-    font-size: 12px;
-    background: linear-gradient(135deg, var(--primary) 0%, #4a90e2 100%);
-    color: var(--text-light);
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    position: relative;
-    overflow: hidden;
-}
-
-.tag-input-group > button:hover {
-    background-color: var(--primary-light);
-}
-
-/* Nút xoá thẻ */
-.single-tag-input button {
-    background-color: transparent;
-    color: #e74c3c;
-    border: none;
-    border-radius: 30px;
-    width: 30px;
-    height: 30px;
-    font-size: 10px;
-    line-height: 1;
-    font-weight: bold;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.single-tag-input button {
-    background: linear-gradient(135deg, transparent 0%, rgba(231, 76, 60, 0.1) 100%);
-    color: #e74c3c;
-    /* border: 1px solid transparent; */
-    border-radius: 30px;
-    width: 30px;
-    height: 30px;
-    font-size: 10px;
-    line-height: 1;
-    font-weight: bold;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    position: relative;
-    overflow: hidden;
-}
-
-.single-tag-input button:hover {
-    background-color: #f39890;
-    color: #fff;
-}
-
-* {
-    scroll-behavior: smooth;
-}
-

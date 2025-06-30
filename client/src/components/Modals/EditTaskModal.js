@@ -103,42 +103,53 @@ export default function EditTaskModal({ initialValues, onConfirm, onCancel }) {
     <div className="edit-task-modal-overlay">
       <form className="edit-task-modal-content" onSubmit={handleSubmit}>
         <h3 className="edit-task-modal-title">Chỉnh sửa công việc</h3>
+        <div className="edit-task-modal-row">
+          <div className="edit-task-modal-col">
+            <label>Nội dung</label>
+            <input
+              type="text"
+              value={values.content}
+              onChange={(e) => handleChange('content', e.target.value)}
+              required
+            />
+          </div>
 
-        <label>Nội dung</label>
-        <input
-          type="text"
-          value={values.content}
-          onChange={(e) => handleChange('content', e.target.value)}
-          required
-        />
+          <div className="edit-task-modal-col">
+            <label>Độ ưu tiên</label>
+            <select
+              value={values.priority}
+              onChange={(e) => handleChange('priority', e.target.value)}
+              required
+            >
+              <option value="">Chọn mức độ</option>
+              <option value="high">Cao</option>
+              <option value="medium">Trung bình</option>
+              <option value="low">Thấp</option>
+            </select>
+          </div>
+        </div>
 
-        <label>Độ ưu tiên</label>
-        <select
-          value={values.priority}
-          onChange={(e) => handleChange('priority', e.target.value)}
-          required
-        >
-          <option value="">Chọn mức độ</option>
-          <option value="high">Cao</option>
-          <option value="medium">Trung bình</option>
-          <option value="low">Thấp</option>
-        </select>
+        <div className="edit-task-modal-row">
+          <div className="edit-task-modal-col">
+            <label>Hạn hoàn thành</label>
+            <input
+              type="date"
+              value={values.deadline}
+              onChange={(e) => handleChange('deadline', e.target.value)}
+            />
+          </div>
 
-        <label>Hạn hoàn thành</label>
-        <input
-          type="date"
-          value={values.deadline}
-          onChange={(e) => handleChange('deadline', e.target.value)}
-        />
-
-        <label>Tags (phân cách bằng dấu phẩy)</label>
-        <input
-          type="text"
-          value={values.tagInput}
-          onChange={(e) => handleChange('tagInput', e.target.value)}
-          onBlur={syncTagsFromInput}
-          placeholder="Giải trí, học tập..."
-        />
+          <div className="edit-task-modal-col">
+            <label>Tags (phân cách bằng dấu phẩy)</label>
+            <input
+              type="text"
+              value={values.tagInput}
+              onChange={(e) => handleChange('tagInput', e.target.value)}
+              onBlur={syncTagsFromInput}
+              placeholder="Giải trí, học tập..."
+            />
+          </div>
+        </div>
 
         {tagList.length > 0 && (
           <div className="edit-task-modal-tag-list">
@@ -152,7 +163,9 @@ export default function EditTaskModal({ initialValues, onConfirm, onCancel }) {
                 </span>
                 <select
                   className="edit-task-modal-color-select"
-                  style={{ backgroundColor: tag.color }}
+                  style={{ backgroundColor: tag.color,
+                    color: tag.color
+                  }}
                   value={tag.color}
                   onChange={(e) => handleTagColorChange(index, e.target.value)}
                 >
@@ -175,11 +188,13 @@ export default function EditTaskModal({ initialValues, onConfirm, onCancel }) {
           </div>
         )}
 
-        <label>Ghi chú</label>
-        <textarea
-          value={values.notes}
-          onChange={(e) => handleChange('notes', e.target.value)}
-        />
+        <div className="edit-task-modal-full">
+          <label>Ghi chú</label>
+          <textarea
+            value={values.notes}
+            onChange={(e) => handleChange('notes', e.target.value)}
+          />
+        </div>
 
         <div className="edit-task-modal-actions">
           <button type="button" className="edit-task-modal-btn cancel" onClick={onCancel}>Huỷ</button>

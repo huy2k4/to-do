@@ -22,7 +22,7 @@
 }
 
 .task-block:hover {
-    transform: translateY(-2px);
+    /* transform: translateY(-2px); */
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -84,9 +84,7 @@
     word-break: break-word;
 }
 
-.task-block:hover .task-content {
-    color: var(--primary-green);
-}
+
 
 .completed {
     text-decoration: line-through;

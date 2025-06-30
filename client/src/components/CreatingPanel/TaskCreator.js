@@ -9,8 +9,10 @@ export default function TaskCreator() {
 
   const tagColors = [
     '#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5',
-    '#2196f3', '#009688', '#4caf50', '#ff9800', '#795548'
+    '#2196f3', '#009688', '#4caf50', '#ff9800', '#795548',
+    '#607d8b', '#ff5722', '#8bc34a', '#ffc107', '#9e9e9e'
   ];
+  
   const currentUser = useSelector(state => state.user.currentUser);
   const [content, setContent] = useState('');
   const today = new Date().toISOString().split('T')[0];
@@ -19,6 +21,9 @@ export default function TaskCreator() {
   const [notes, setNotes] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
   const [tagsInput, setTagsInput] = useState([{ name: '', color: tagColors[0] }]);
+  
+  // Error messages
+  const [errorMessages, setErrorMessages] = useState([]);
 
   const containerRef = useRef(null);
   const deadlineRef = useRef();
@@ -36,66 +41,167 @@ export default function TaskCreator() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Validation functions
+  const validateContent = (value) => {
+    const trimmed = value.trim();
+    const specialChars = /[@#!^*$]/;
+    
+    if (specialChars.test(trimmed)) {
+      return 'Nội dung không được chứa ký tự đặc biệt @#!^*$';
+    }
+    
+    if (trimmed.length > 70) {
+      return 'Nội dung không được quá 70 ký tự';
+    }
+    
+    return null;
+  };
+
+  const validateTagName = (name) => {
+    const trimmed = name.trim();
+    const specialChars = /[@#!^*$]/;
+    
+    if (specialChars.test(trimmed)) {
+      return 'Tên thẻ không được chứa ký tự đặc biệt @#!^*$';
+    }
+    
+    if (trimmed.length > 20) {
+      return 'Tên thẻ không được quá 20 ký tự';
+    }
+    
+    return null;
+  };
+
+  const handleContentChange = (e) => {
+    const value = e.target.value;
+    setContent(value);
+    
+    // Clear error messages when user types
+    setErrorMessages([]);
+  };
+
   const handleTagChange = (index, field, value) => {
     setTagsInput(prev => {
       const updated = [...prev];
       updated[index][field] = value;
       return updated;
     });
+    
+    // Clear error messages when user types
+    setErrorMessages([]);
+  };
+
+  const getRandomColor = () => {
+    return tagColors[Math.floor(Math.random() * tagColors.length)];
   };
 
   const handleAddTagField = () => {
-    setTagsInput(prev => [...prev, { name: '', color: tagColors[0] }]);
+    // Kiểm tra tag cuối có được nhập tên chưa
+    const lastTag = tagsInput[tagsInput.length - 1];
+    if (lastTag.name.trim() === '') {
+      setErrorMessages(['Vui lòng nhập tên thẻ trước khi thêm thẻ mới']);
+      return;
+    }
+    
+    setTagsInput(prev => [...prev, { name: '', color: getRandomColor() }]);
+    setErrorMessages([]);
   };
 
   const handleRemoveTagField = (index) => {
     setTagsInput(prev => prev.filter((_, i) => i !== index));
+    setErrorMessages([]);
   };
 
   const getOrCreateTag = (name, color) => {
     const normalizedName = name.trim().toLowerCase();
+
     const existing = tags.find(tag => tag.name.toLowerCase() === normalizedName);
-    if (existing) return existing;
+    if (existing) {
+      return existing;
+    }
+
 
     const newTag = {
       id: `tag-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
       name: name.trim(),
-      color: color || tagColors[0]
+      color: color || getRandomColor()
     };
 
     dispatch(addTag(newTag));
     return newTag;
   };
 
+  const canAddTask = () => {
+    return content.trim() !== '' && currentUser;
+  };
+
   const handleAddTask = () => {
-    if (content.trim() === '') return;
+    const errors = [];
+    
+    if (content.trim() === '') {
+      errors.push('Vui lòng nhập nội dung công việc');
+    } else {
+      const contentError = validateContent(content);
+      if (contentError) {
+        errors.push(contentError);
+      }
+    }
+
     if (!currentUser) {
-      alert('Phải đăng nhập trước khi tạo task');
+      errors.push('Phải đăng nhập trước khi tạo task');
+    }
+
+    const tagErrors = [];
+    tagsInput.forEach((tag, index) => {
+      if (tag.name.trim() !== '') {
+        const tagError = validateTagName(tag.name);
+        if (tagError) {
+          tagErrors.push(`Thẻ ${index + 1}: ${tagError}`);
+        }
+      }
+    });
+
+    if (tagErrors.length > 0) {
+      errors.push(...tagErrors);
+    }
+
+    if (errors.length > 0) {
+      setErrorMessages(errors);
       return;
     }
 
-    const finalTags = tagsInput
+    // Lọc và tạo tags (loại bỏ trùng lặp)
+    const validTags = tagsInput
       .filter(tag => tag.name.trim() !== '')
-      .map(tag => getOrCreateTag(tag.name.trim(), tag.color));
+      .map(tag => ({ name: tag.name.trim(), color: tag.color }));
+
+    // Loại bỏ tags trùng tên (case-insensitive)
+    const uniqueTags = validTags.filter((tag, index, self) => 
+      index === self.findIndex(t => t.name.toLowerCase() === tag.name.toLowerCase())
+    );
+
+    const finalTags = uniqueTags.map(tag => getOrCreateTag(tag.name, tag.color));
 
     const newTask = {
       content: content.trim(),
       deadline: deadline || today,
       priority,
       tags: finalTags,
-      notes,
+      notes: notes.trim(),
       isDone: false,
       userId: currentUser.id,
     };
 
     dispatch({ type: 'task/createTask', payload: newTask });
 
+    // Reset form
     setContent('');
-    setDeadline('');
+    setDeadline(today);
     setPriority('medium');
-    setTagsInput([{ name: '', color: tagColors[0] }]);
+    setTagsInput([{ name: '', color: getRandomColor() }]);
     setNotes('');
     setIsExpanded(false);
+    setErrorMessages([]);
   };
 
   return (
@@ -112,7 +218,7 @@ export default function TaskCreator() {
           placeholder="Nghe nhạc, gym,..."
           value={content}
           onFocus={() => setIsExpanded(true)}
-          onChange={(e) => setContent(e.target.value)}
+          onChange={handleContentChange}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey) {
               e.preventDefault();
@@ -155,7 +261,8 @@ export default function TaskCreator() {
                   tagsRef.current?.focus();
                 }
               }}
-            ><option value="" disabled selected>Ưu tiên</option>
+            >
+              <option value="" disabled>Ưu tiên</option>
               <option value="low">Thấp</option>
               <option value="medium">Trung bình</option>
               <option value="high">Cao</option>
@@ -174,34 +281,25 @@ export default function TaskCreator() {
                     onChange={(e) => handleTagChange(index, 'name', e.target.value)}
                     ref={index === 0 ? tagsRef : null}
                   />
-                  <button type="button" onClick={handleAddTagField}>
+                  <button 
+                    type="button" 
+                    onClick={handleAddTagField}
+                    className="tag-btn add-btn"
+                    disabled={tag.name.trim() === ''}
+                  >
                     +
                   </button>
-                  {/* <select
-                    style={{
-                      backgroundColor: tag.color
-                    }}
-                    value={tag.color}
-                    onChange={(e) => handleTagChange(index, 'color', e.target.value)}
-                  >
-                    {tagColors.map((color) => (
-
-                      <option style={{
-                        backgroundColor: color,
-                        color: 'transparent',
-                        fontSize: '0px'
-                      }} key={color} value={color}
-                      ></option>
-                    ))}
-                  </select> */}
                   {tagsInput.length > 1 && (
-                    <button type="button" onClick={() => handleRemoveTagField(index)}>
-                      X
+                    <button 
+                      type="button" 
+                      onClick={() => handleRemoveTagField(index)}
+                      className="tag-btn remove-btn"
+                    >
+                      ×
                     </button>
                   )}
                 </div>
               ))}
-
             </div>
           </div>
 
@@ -217,17 +315,31 @@ export default function TaskCreator() {
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault();
-                  handleAddTask();
+                  if (canAddTask()) {
+                    handleAddTask();
+                  }
                 }
               }}
             />
           </div>
+
+          {/* Error Messages */}
+          {errorMessages.length > 0 && (
+            <div className="error-messages">
+              {errorMessages.map((error, index) => (
+                <div key={index} className="error-message">
+                  {error}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="task-field">
           <button
-            className={`task-crt-add-btn ${content.trim() !== '' ? 'visible' : ''}`}
+            className={`task-crt-add-btn ${canAddTask() ? 'visible' : 'disabled'}`}
             onClick={handleAddTask}
+            disabled={!canAddTask()}
           >
             Thêm
           </button>

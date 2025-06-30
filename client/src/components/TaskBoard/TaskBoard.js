@@ -60,6 +60,10 @@ export default function TaskBoard() {
     }
   }, [dispatch, currentUser]);
 
+  if (!currentUser?.id) {
+    return <div>Đang tải dữ liệu người dùng...</div>;
+  }
+
   return (
     <div className="task-board-container">
       <div className="task-board-header">
@@ -79,17 +83,18 @@ export default function TaskBoard() {
           <div className="task-sort-buttons">
             <button
               className={`task-sort-button ${sortBy === 'priority' ? 'active' : ''}`}
-              onClick={() => setSortBy('priority')}
+              onClick={() => setSortBy(sortBy === 'priority' ? 'none' : 'priority')}
             >
               Ưu tiên
             </button>
             <button
               className={`task-sort-button ${sortBy === 'deadline' ? 'active' : ''}`}
-              onClick={() => setSortBy('deadline')}
+              onClick={() => setSortBy(sortBy === 'deadline' ? 'none' : 'deadline')}
             >
               Deadline
             </button>
           </div>
+
         </div>
       </div>
 
@@ -110,20 +115,24 @@ export default function TaskBoard() {
       </div>
 
       <div className="task-date-picker">
-        <span>Từ</span>
-        <input
-          type="date"
-          className="task-date-filter"
-          value={fromDate}
-          onChange={(e) => setFromDate(e.target.value)}
-        />
-        <span>Đến</span>
-        <input
-          type="date"
-          className="task-date-filter"
-          value={toDate}
-          onChange={(e) => setToDate(e.target.value)}
-        />
+        <div className="from-to">
+          <span>Từ</span>
+          <input
+            type="date"
+            className="task-date-filter"
+            value={fromDate}
+            onChange={(e) => setFromDate(e.target.value)}
+          />
+        </div>
+        <div className="from-to">
+          <span>Đến</span>
+          <input
+            type="date"
+            className="task-date-filter"
+            value={toDate}
+            onChange={(e) => setToDate(e.target.value)}
+          />
+        </div>
       </div>
     </div>
   );
