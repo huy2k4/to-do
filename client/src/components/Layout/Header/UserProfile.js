@@ -15,7 +15,7 @@ export default function UserProfile({ currentUser, handleProfileClick, handleLog
     localStorage.removeItem('user');
     dispatch(clearTags());
     dispatch(clearTasks());
-    navigate('/login');
+    navigate('/');
   };
 
   return (
@@ -26,7 +26,10 @@ export default function UserProfile({ currentUser, handleProfileClick, handleLog
           <div className="user-profile">
             <span className="username">Xin chào, {currentUser.username || 'Người dùng'}</span>
             
-            <button className="logout-btn" onClick={handleLogout}>
+            <button className="logout-btn" onClick={(event) => {
+              event.stopPropagation();
+              handleLogout();
+            }}>
               Đăng xuất
             </button>
           </div>
@@ -36,7 +39,7 @@ export default function UserProfile({ currentUser, handleProfileClick, handleLog
           onClick={handleLoginClick}
           style={{ marginLeft: '8px', textDecoration: 'underline', color: 'blue' }}
         >
-          Đăng nhập
+
         </a>
       )}
     </div>

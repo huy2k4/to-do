@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Logo from './Logo';
-import Navbar from './Navbar';
+// import Navbar from './Navbar';
 import UserProfile from './UserProfile';
 import '../../../assets/css/header.css';
 
@@ -29,7 +29,7 @@ export default function Header() {
                 <i className="fa fa-bars"></i>
             </div>
             <Logo />
-            <Navbar isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
+            {/* <Navbar isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} /> */}
             <UserProfile
                 currentUser={currentUser}
                 handleProfileClick={handleProfileClick}

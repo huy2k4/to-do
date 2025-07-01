@@ -1,97 +1,153 @@
-.register-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 30px 20px;
+
+.register-form {
+  max-width: 45%;
+  margin: 2rem auto;
+  padding: 1.25rem;
+  background: var(--color-accent);
+  border-radius: 0.75rem;
+  box-shadow: 0 3px 12px var(--shadow-strong);
+  border: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: relative;
 }
 
-.form {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    width: 50vw;
-    max-width: 100%;
-    margin: 50px auto;
-    padding: 40px;
+.register-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--primary-green);
+  border-radius: 0.75rem 0.75rem 0 0;
 }
 
-.form-group {
-    margin-bottom: 20px;
+.register-form-label {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  text-align: center;
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
 }
 
-.form-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #333;
+.register-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-#lbform1 {
-    font-family: "Times New Roman", Times, serif;
-
+.register-form-group .register-form-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  text-align: left;
 }
 
-.form-group input {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    transition: border-color 0.3s, box-shadow 0.3s;
-    background-color: #fff;
+.register-form-group input {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-light);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  color: var(--color-text-dark);
+  background: var(--color-primary);
+  -webkit-border-radius: 0.5rem;
+  -moz-border-radius: 0.5rem;
 }
 
-.form-group input:focus {
-    border-color: #4a90e2;
-    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
-    outline: none;
+.register-form-group input:focus {
+  outline: none;
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 3px rgba(var(--rgba-primary), 0.25);
 }
 
-.error-message {
-    color: #e74c3c;
-    font-size: 14px;
-    margin-top: 5px;
-    display: block;
+.register-error-message {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--btn-dlt);
+  min-height: 1.4rem;
+  text-align: left;
 }
 
-.btn-submit {
-    width: 100%;
-    padding: 12px;
-    background-color: #4a90e2;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.1s;
+.register-btn-submit {
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+  background: var(--btn-crt);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
 }
 
-.btn-submit:hover:not(:disabled) {
-    background-color: #3578e5;
-    transform: translateY(-1px);
+.register-btn-submit:disabled {
+  background: var(--btn-cancel);
+  color: var(--color-text-gray);
+  cursor: not-allowed;
 }
 
-.btn-submit:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-    color: #666;
-}
+/* Responsive */
+@media (max-width: 768px) {
+  .register-form {
+    max-width: 90%;
+    padding: 1rem;
+    margin: 1.5rem auto;
+  }
 
-.form-group input.invalid {
-    border-color: #e74c3c;
-    background-color: #fff8f8;
-    box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
-}
+  .register-form-label {
+    font-size: 1.3rem;
+  }
 
-.form-group input.valid {
-    border-color: #2ecc71;
-    background-color: #f8fff8;
-    box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
+  .register-form-group .register-form-label {
+    font-size: 0.95rem;
+  }
+
+  .register-form-group input {
+    padding: 0.65rem;
+    font-size: 0.95rem;
+  }
+
+  .register-btn-submit {
+    font-size: 1rem;
+    padding: 0.65rem;
+  }
+
+  .register-error-message {
+    font-size: 0.8rem;
+  }
 }
 
 @media (max-width: 480px) {
-    .form {
-        margin: 20px;
-        padding: 20px;
-        width: 80vw;
-    }
+  .register-form {
+    padding: 0.75rem;
+    margin: 1rem auto;
+  }
+
+  .register-form-label {
+    font-size: 1.1rem;
+  }
+
+  .register-form-group .register-form-label {
+    font-size: 0.85rem;
+  }
+
+  .register-form-group input {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .register-error-message {
+    font-size: 0.75rem;
+    min-height: 1.2rem;
+  }
+
+  .register-btn-submit {
+    font-size: 0.95rem;
+    padding: 0.5rem;
+  }
 }

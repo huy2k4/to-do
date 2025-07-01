@@ -33,7 +33,7 @@ export default function RegisterForm() {
 
     useEffect(() => {
         if (currentUser) {
-            navigate('/'); // Chuyển qua trang chính
+            navigate('/');
         }
     }, [currentUser, navigate]);
 
@@ -62,22 +62,22 @@ export default function RegisterForm() {
     };
 
     return (
-        <form className="form" onSubmit={handleSubmit}>
-            <label className="form-label">DANG KI</label>
+        <form className="register-form" onSubmit={handleSubmit}>
+            <label className="register-form-label">ĐĂNG KÝ</label>
 
-            <div className="form-group">
-                <label className="form-label">Họ và Tên</label>
+            <div className="register-form-group">
+                <label className="register-form-label">Họ và Tên</label>
                 <input
                     name="username"
                     placeholder="Họ và Tên"
                     value={form.username}
                     onChange={handleChange}
                 />
-                <span className="error-message">{errors.username}</span>
+                <span className="register-error-message">{errors.username}</span>
             </div>
 
-            <div className="form-group">
-                <label className="form-label">Mật khẩu</label>
+            <div className="register-form-group">
+                <label className="register-form-label">Mật khẩu</label>
                 <input
                     type="password"
                     name="password"
@@ -85,11 +85,11 @@ export default function RegisterForm() {
                     value={form.password}
                     onChange={handleChange}
                 />
-                <span className="error-message">{errors.password}</span>
+                <span className="register-error-message">{errors.password}</span>
             </div>
 
-            <div className="form-group">
-                <label className="form-label">Nhập lại Mật khẩu</label>
+            <div className="register-form-group">
+                <label className="register-form-label">Nhập lại Mật khẩu</label>
                 <input
                     type="password"
                     name="confirmPassword"
@@ -97,11 +97,13 @@ export default function RegisterForm() {
                     value={form.confirmPassword}
                     onChange={handleChange}
                 />
-                <span className="error-message">{errors.confirmPassword}</span>
+                <span className="register-error-message">{errors.confirmPassword}</span>
             </div>
 
-            <div className="form-group">
-                <button type="submit" className="btn btn-submit" disabled={!isSubmitEnabled}>Đăng ký</button>
+            <div className="register-form-group">
+                <button type="submit" className="register-btn register-btn-submit" disabled={!isSubmitEnabled}>
+                    Đăng ký
+                </button>
             </div>
         </form>
     );
