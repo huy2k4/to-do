@@ -52,13 +52,9 @@ export default function TaskBoard() {
 
   useEffect(() => {
     if (currentUser?.id) {
-      dispatch({ type: 'task/fetchTasks', payload: currentUser.id });
+        dispatch({ type: 'task/fetchTasks', payload: currentUser.id });
     }
-  }, [dispatch, currentUser]);
-
-  if (!currentUser?.id) {
-    return <div>Đang tải dữ liệu người dùng...</div>;
-  }
+}, [currentUser?.id, dispatch]);
 
   return (
     <div className="task-board-container">
