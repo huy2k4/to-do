@@ -7,19 +7,6 @@ import '../../assets/css/taskboard.css';
 export default function TaskBoard() {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
-  // console.log(currentUser);
-  // const tasks = useSelector(state => {
-  //   // console.log(state);
-  //   return state.tasks.items || []
-  // });
-
-  // const tags = Array.from(
-  //   new Map(
-  //     tasks
-  //       .flatMap(task => task.tags || [])
-  //       .map(tag => [tag.name.toLowerCase(), tag])
-  //   ).values()
-  // );
 
   const [sortBy, setSortBy] = useState('none');
   const [searchTerm, setSearchTerm] = useState('');
@@ -46,6 +33,15 @@ export default function TaskBoard() {
       dispatch({
         type: 'task/updateTask',
         payload: { userId: currentUser.id, id, ...values },
+      }),
+    [dispatch, currentUser]
+  );
+
+  const handleTogglePin = useCallback(
+    (task) =>
+      dispatch({
+        type: 'task/updateTask',
+        payload: { userId: currentUser.id, id: task.id, isPinned: !task.isPinned },
       }),
     [dispatch, currentUser]
   );
@@ -109,6 +105,7 @@ export default function TaskBoard() {
               handleDelete={() => handleDelete(task.id)}
               handleEdit={handleEdit}
               handleToggleDone={() => handleToggleDone(task)}
+              handleTogglePin={() => handleTogglePin(task)}
             />
           ))
         )}

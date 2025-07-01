@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import '../../assets/css/taskitem.css';
-import { Trash2, CheckCircle } from 'lucide-react';
+import { Trash2, CheckCircle, Pin } from 'lucide-react';
 import ConfirmDeleteModal from '../Modals/ConfirmDeleteModal';
 import EditTaskModal from '../Modals/EditTaskModal';
 import { useSelector } from 'react-redux';
 
-export default function TaskItem({ task, handleDelete, handleToggleDone, handleEdit }) {
+export default function TaskItem({ task, handleDelete, handleToggleDone, handleEdit, handleTogglePin }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const currentUser = useSelector(state => state.user.currentUser);
@@ -25,7 +25,7 @@ export default function TaskItem({ task, handleDelete, handleToggleDone, handleE
   }
 
   const handleDeleteConfirmed = () => {
-    handleDelete(currentUser.id, task.id);
+    handleDelete();
     setShowDeleteModal(false);
   };
 
@@ -34,22 +34,31 @@ export default function TaskItem({ task, handleDelete, handleToggleDone, handleE
     setShowEditModal(false);
   };
 
-
   const deadlineStatus = task.deadline ? getDeadlineStatus(task.deadline) : null;
   const taskTags = Array.isArray(task.tags) ? task.tags : [];
 
   return (
     <div className="task-block-container">
       <div
-        className={`task-block priority-${task.priority}`}
+        className={`task-block priority-${task.priority} ${task.isPinned ? 'pinned-task' : ''} ${task.isDone ? 'completed' : ''}`}
         onClick={() => setShowEditModal(true)}
       >
         <div className="item">
           <span className="task-content">
-            {typeof task.content === 'string' ? task.content : '[nội dung không hợp lệ]'}
+            <span className="task-content">
+              {typeof task.content === 'string' ? (
+                <>
+                  {task.content} {task.isPinned && '📌'}
+                </>
+              ) : (
+                '[nội dung không hợp lệ]'
+              )}
+            </span>
+
           </span>
 
           <div className="task-meta">
+
             {deadlineStatus && (
               <div className="task-deadline" style={{ color: deadlineStatus.color }}>
                 {deadlineStatus.status}
@@ -87,7 +96,6 @@ export default function TaskItem({ task, handleDelete, handleToggleDone, handleE
 
         <div className="task-actions">
           <div
-
             onClick={(event) => {
               event.stopPropagation();
               setShowDeleteModal(true);
@@ -101,12 +109,32 @@ export default function TaskItem({ task, handleDelete, handleToggleDone, handleE
           <div
             onClick={(event) => {
               event.stopPropagation();
-              handleToggleDone(currentUser.id, task);
+              handleToggleDone();
             }}
-            className="tdl-done-btn tdlbtn"
-            title="Xong"
+            className="tdl-done-btn "
+            title={task.isDone ? 'Hoàn tác' : 'Hoàn thành'}
           >
-            <CheckCircle size={24} strokeWidth={2.2} />
+            <CheckCircle
+              size={24}
+              strokeWidth={2.2}
+              fill={task.isDone ? '#2ecc71' : 'none'}
+            />
+          </div>
+
+          <div
+            onClick={(event) => {
+              event.stopPropagation();
+              handleTogglePin();
+            }}
+            className="tdl-pin-btn "
+            title={task.isPinned ? 'Bỏ ghim' : 'Ghim'}
+          >
+            <Pin
+              size={24}
+              strokeWidth={2.2}
+              fill={task.isPinned ? '#ff9800' : 'none'}
+              color={task.isPinned ? '#ff9800' : 'currentColor'}
+            />
           </div>
         </div>
       </div>
@@ -125,7 +153,8 @@ export default function TaskItem({ task, handleDelete, handleToggleDone, handleE
             priority: task.priority || '',
             deadline: task.deadline || '',
             tags: task.tags || [],
-            notes: task.notes || ''
+            notes: task.notes || '',
+            isPinned: task.isPinned || false
           }}
           onConfirm={handleEditConfirmed}
           onCancel={() => setShowEditModal(false)}

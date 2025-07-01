@@ -2,12 +2,15 @@ import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import CompletedTaskItem from './CompletedTaskItem';
 import '../../assets/css/completedtaskboard.css';
-import { selectCompletedTasks } from '../../redux/selectors/taskSelector';
+import { selectCompletedTasks, selectTaskProgress } from '../../redux/selectors/taskSelector';
+
 
 export default function CompletedTaskBoard() {
   const dispatch = useDispatch();
   // const currentUser = useSelector(state => state.user.currentUser);
   const completedTasks = useSelector(selectCompletedTasks);
+
+  const { total, completed, percent } = useSelector(selectTaskProgress);
 
   const handleToggleDone = useCallback((userId, task) => {
     dispatch({
@@ -22,6 +25,16 @@ export default function CompletedTaskBoard() {
         <label className="cplt-tb-label">
           <span>Việc đã hoàn thành</span>
         </label>
+
+        {total > 0 && (<div className="task-progress">
+          {/* <span>{completed} / {total}</span> */}
+          <div className="task-progress-bar">
+            <div className="task-progress-fill" style={{ width: `${percent}%` }}></div>
+          </div>
+        </div>
+
+        )}
+
       </div>
       <div className="cplt-tb">
         {completedTasks.length === 0 ? (

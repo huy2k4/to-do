@@ -41,7 +41,6 @@ export default function TaskCreator() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Validation functions
   const validateContent = (value) => {
     const trimmed = value.trim();
     const specialChars = /[@#!^*$]/;
@@ -50,8 +49,8 @@ export default function TaskCreator() {
       return 'Nội dung không được chứa ký tự đặc biệt @#!^*$';
     }
     
-    if (trimmed.length > 70) {
-      return 'Nội dung không được quá 70 ký tự';
+    if (trimmed.length > 44) {
+      return 'Nội dung không được quá 44 ký tự';
     }
     
     return null;
@@ -76,7 +75,6 @@ export default function TaskCreator() {
     const value = e.target.value;
     setContent(value);
     
-    // Clear error messages when user types
     setErrorMessages([]);
   };
 
@@ -87,7 +85,6 @@ export default function TaskCreator() {
       return updated;
     });
     
-    // Clear error messages when user types
     setErrorMessages([]);
   };
 
@@ -96,7 +93,6 @@ export default function TaskCreator() {
   };
 
   const handleAddTagField = () => {
-    // Kiểm tra tag cuối có được nhập tên chưa
     const lastTag = tagsInput[tagsInput.length - 1];
     if (lastTag.name.trim() === '') {
       setErrorMessages(['Vui lòng nhập tên thẻ trước khi thêm thẻ mới']);
@@ -189,6 +185,7 @@ export default function TaskCreator() {
       tags: finalTags,
       notes: notes.trim(),
       isDone: false,
+      // isPined:false,
       userId: currentUser.id,
     };
 
