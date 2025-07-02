@@ -319,8 +319,6 @@ export default function TaskCreator() {
               }}
             />
           </div>
-
-          {/* Error Messages */}
           {errorMessages.length > 0 && (
             <div className="error-messages">
               {errorMessages.map((error, index) => (
