@@ -32,8 +32,8 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "server": "json-server --watch db.json --port 3001",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "webpack serve --mode development --open",
+    "build": "webpack --mode production",
     "test": "react-scripts test",
     "dev": "node './BE/app.js' ^ react-scripts start",
     "eject": "react-scripts eject"
@@ -57,12 +57,19 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.27.4",
-    "@babel/preset-env": "^7.27.2",
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
     "@babel/preset-react": "^7.27.1",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
+    "babel-loader": "^10.0.0",
+    "css-loader": "^7.1.2",
     "gh-pages": "^6.3.0",
-    "tailwindcss": "^4.1.10"
+    "html-webpack-plugin": "^5.6.3",
+    "style-loader": "^4.0.0",
+    "tailwindcss": "^4.1.10",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
   }
 }

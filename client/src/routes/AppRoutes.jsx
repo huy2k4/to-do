@@ -1,3 +1,4 @@
+import React from 'react'; // Thêm dòng này
 import { Routes, Route, Navigate } from 'react-router-dom';
 import TodoPage from '../pages/TodoPage';
 import LoginPage from '../pages/LoginPage';
@@ -17,7 +18,7 @@ export default function AppRoutes() {
       <Route path="/stats" element={<StatsPage />}>
         <Route index element={<Navigate to="overview" replace />} />
         <Route path="overview" element={<TaskInfoTable />} />
-        <Route path="statistics" element={<TaskByTagChart/>} />
+        <Route path="statistics" element={<TaskByTagChart />} />
       </Route>
     </Routes>
   );
